@@ -1,3 +1,6 @@
 .idea/
 *.pyc
 *.pub
+*.log
+*.xml
+*.txt
