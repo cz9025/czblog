@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ user.username }}的个人资料
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/center.css' %}">
+    <style>
+        .user span {
+            display: inline-block;
+            min-width: 70px;
+            text-align: justify;
+            text-align-last: justify;
+        {#margin-right: 30px;#}
+        }
+
+    </style>
+
+{% endblock %}
+{% block content %}
+<div class="container">
+
+    <h4 class="tag">基本信息：</h4>
+
+    <ul class="user">
+        <li>
+            <div><span>用户名</span>：&nbsp;&nbsp;&nbsp;{{ user.username }}</div>
+        </li>
+
+        <li>
+            <div><span>邮箱</span>：&nbsp;&nbsp;&nbsp;{{ user.email }}</div>
+        </li>
+
+        <li>
+            <div><span>上次登录</span>：&nbsp;&nbsp;&nbsp;{{ user.last_login |date:"Y-m-d H:i:s" }}</div>
+        </li>
+
+    </ul>
+    <h4 class="tag">常用的标签：</h4>
+    <ul class="tags">
+
+        {% if not mark %}
+            还没有选择过标签哦
+        {% else %}
+            {% for key,v in mark.items %}
+                <li class="mk"><a href="{% url 'myblog:mark' user.username key %}">{{ key }}({{ v }})</a></li>
+            {% endfor %}
+        {% endif %}
+
+    </ul>
+    <div class="blog">
+        <h4 class="tag">发布的博客：</h4>
+        <ul>
+            {% if not blogs %}
+            {% ifequal user.username request.user.username %}
+            <h4>没发表过博客？<a href="{% url 'myblog:mdeditor' %}">快来写写</a></h4>
+            {% else %}
+            Ta还没有博客哦
+            {% endifequal %}
+
+            {% else %}
+            {% for blog in blogs %}
+                <li><h4><a class="oneline" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h4>
+                    <p class="blog-content">{{ blog.content }}</p>
+
+                    <span class="time"> {{ blog.utime|date:"Y-m-d H:i:s" }}</span> &nbsp;&nbsp;
+                    <span>阅读数：{{ blog.rcount }}</span>&nbsp;&nbsp;
+                    <span>评论数：{{ blog.coms }}</span>
+                </li>
+            {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+
+</div>
+
+{% endblock %}
