@@ -5,11 +5,8 @@ from __future__ import unicode_literals
 from django.shortcuts import render, HttpResponseRedirect, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-
 # 改版后使用修改过的用户表，如果用自带的，记得注释这里
 from blog.models import User
-
-# Create your views here.
 
 # 自己的资料
 from blog.models import Blogs
@@ -26,11 +23,11 @@ def usercenter(request, name):
     # 修改资料请求
     if request.POST:
         user.nick_name = request.POST.get('nick', '匿名')
-        user.birthday = request.POST.get('birthday', '1979-01-01')
+        user.birthday = request.POST.get('birthday', '2018-01-01')
         user.address = request.POST.get('address')
         user.mobile = request.POST.get('mobile')
         # 性别要处理
-        user.gender = request.POST.get('gender')
+        user.gender = request.POST.get('gender', 0)
         # 头像
         # user.head_img=request.POST.get('head_img')
         user.save()

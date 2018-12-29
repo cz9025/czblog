@@ -39,11 +39,15 @@
                     </li>
                     <li>
                         <span>出生日期</span>：&nbsp;&nbsp;&nbsp;<input name="birthday" type="date"
-                                                                   value="{{ user.birthday }}">
+                                                                   value="{{ user.birthday|date:"Y-m-d" }}">
+                        <script>
+                            {#alert("{{ user.birthday }},{{ user.email }}");#}
+                            console.log('{{ user.birthday }}');
+                        </script>
                     </li>
                     <li>
                         <span>性别</span>：&nbsp;&nbsp;&nbsp;
-                        <label> <input id="man" name="gender" type="radio" value="1">男</label>
+                        <label> <input id="man" name="gender" type="radio" value="1"> 男</label>
                         &nbsp;&nbsp;&nbsp;<label><input id="female" name="gender" type="radio" value="0"> 女</label>
                     </li>
                     <li>
@@ -69,14 +73,17 @@
             $(function () {
                 {% ifequal user.gender '1' %}
                     $("#man").attr('checked', 'checked');
-                {% else %}
+                    {% else %}
                     $("#female").attr('checked', 'checked');
                 {% endifequal  %}
             });
         </script>
     </div>
     <h4 class="tag">基本信息：
-        <button id="information" class="btn info">完善资料</button>
+        {#判断当前登录用户是否与被浏览的用户一致#}
+        {% ifequal request.user.username user.username %}
+            <button id="information" class="btn info">完善资料</button>
+        {% endifequal %}
     </h4>
     <ul class="user">
         <li>
