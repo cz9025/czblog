@@ -1,7 +1,28 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+
+from django.contrib.auth.models import AbstractUser
+
+
+# 这个是在自带的认证表上添加字段
+class User(AbstractUser):
+    nick_name = models.CharField(max_length=50, verbose_name='昵称', default='')
+    birthday = models.DateField(null=True, blank=True, verbose_name='生日')
+    gender = models.CharField(max_length=6, choices=(('1', '男'), ('0', '女')), default='female',
+                              verbose_name='性别')
+    address = models.CharField(max_length=100, default='', verbose_name='地址')
+    mobile = models.CharField(max_length=11, null=True, blank=True, verbose_name='手机号')
+    head_img = models.CharField(max_length=255, verbose_name='用户头像')
+
+    class Meta:
+        db_table = 'user_info'
+        verbose_name = '用户信息'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.username
 
 
 #
@@ -29,7 +50,10 @@ from django.contrib.auth.models import User
 #         verbose_name_plural = "用户"
 #         unique_together = ('name',)
 
+
 # 分类表
+
+
 class Bmarks(models.Model):
     id = models.AutoField(max_length=10, primary_key=True)
     tags = models.CharField(max_length=128, unique=True, null=False, verbose_name="标签")
@@ -63,7 +87,7 @@ class Blogs(models.Model):
 
     marks = models.ForeignKey(Bmarks, null=True, on_delete=models.SET_DEFAULT, related_name='blog_marks',
                               to_field='tags', default="未分类", verbose_name="分类")
-    uname = models.ForeignKey(User, null=True, on_delete=models.SET_DEFAULT, related_name='auth_user',
+    uname = models.ForeignKey(User, null=True, on_delete=models.SET_DEFAULT,
                               to_field='username', default='匿名', verbose_name="用户名")
 
     def __str__(self):
