@@ -1,88 +1,95 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} CSDN{% endblock %}
+{% block title %} csdn中cz9025的博客{% endblock %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/csdn.css' %}">
-<style type="text/css">
-    .csdn {
-        background-color: #e7e7e7;
-    }
+    <link rel="stylesheet" href="{% static 'css/csdn.css' %}">
+    <style type="text/css">
+        .csdn {
+            background-color: #e7e7e7;
+        }
 
-</style>
+    </style>
 {% endblock %}
 
 
 {% block content %}
 
-<div class="container">
+    <div class="container">
 
 
-    <h4>CSDN中爬取用户cz9025的博客</h4>
-    <h4>python模块：</h4>
-    <ul class="newul">
-        {% for ti in python %}
+        <h4>说明：本页内容是在CSDN中爬取用户cz9025的博客数据</h4>
+        <br>
+        <h4>python模块：</h4>
+        <ul class="newul">
+            {% for ti in python %}
 
-        <li>
-            <h2>
-                <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
-            </h2>
+                <li>
+                    <h2>
+                        <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
 
-        </li>
-        {% endfor %}
-    </ul>
+                    </h2>
+                    <a target="_blank" href="{{ ti.urls }}">{{ ti.cont }}</a>
+                    <p><span>{{ ti.times }}</span> <span>{{ ti.cous }}</span> <span>{{ ti.comens }}</span></p>
+                </li>
+            {% endfor %}
+        </ul>
 
-    <h4>功能测试模块：</h4>
-    <ul class="newul">
-        {% for ti in fun %}
+        <h4>功能测试模块：</h4>
+        <ul class="newul">
+            {% for ti in fun %}
 
-        <li>
-            <h2>
-                <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
-            </h2>
+                <li>
+                    <h2>
+                        <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
+                    </h2>
+                    <a target="_blank" href="{{ ti.urls }}">{{ ti.cont }}</a>
+                    <p><span>{{ ti.times }}</span> <span>{{ ti.cous }}</span> <span>{{ ti.comens }}</span></p>
+                </li>
+            {% endfor %}
+        </ul>
 
-        </li>
-        {% endfor %}
-    </ul>
+        <h4>Jmeter模块：</h4>
+        <ul class="newul">
+            {% for ti in jmeter %}
 
-    <h4>Jmeter模块：</h4>
-    <ul class="newul">
-        {% for ti in jmeter %}
+                <li>
+                    <h2>
+                        <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
+                    </h2>
+                    <a target="_blank" href="{{ ti.urls }}">{{ ti.cont }}</a>
+                    <p><span>{{ ti.times }}</span> <span>{{ ti.cous }}</span> <span>{{ ti.comens }}</span></p>
+                </li>
+            {% endfor %}
+        </ul>
 
-        <li>
-            <h2>
-                <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
-            </h2>
+        <h4>Robot Framework自动化测试模块：</h4>
+        <ul class="newul">
+            {% for ti in rfs %}
 
-        </li>
-        {% endfor %}
-    </ul>
+                <li>
+                    <h2>
+                        <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
+                    </h2>
+                    <a target="_blank" href="{{ ti.urls }}">{{ ti.cont }}</a>
+                    <p><span>{{ ti.times }}</span> <span>{{ ti.cous }}</span> <span>{{ ti.comens }}</span></p>
+                </li>
+            {% endfor %}
+        </ul>
 
-    <h4>Robot Framework自动化测试模块：</h4>
-    <ul class="newul">
-        {% for ti in rfs %}
+        <h4>接口测试模块：</h4>
+        <ul class="newul">
+            {% for ti in intf %}
 
-        <li>
-            <h2>
-                <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
-            </h2>
-
-        </li>
-        {% endfor %}
-    </ul>
-
-    <h4>接口测试模块：</h4>
-    <ul class="newul">
-        {% for ti in intf %}
-
-        <li>
-            <h2>
-                <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
-            </h2>
-
-        </li>
-        {% endfor %}
-    </ul>
-</div>
+                <li>
+                    <h2>
+                        <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
+                    </h2>
+                    <a target="_blank" href="{{ ti.urls }}">{{ ti.cont }}</a>
+                    <p><span>{{ ti.times }}</span> <span>{{ ti.cous }}</span> <span>{{ ti.comens }}</span></p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 
 {% endblock %}
 

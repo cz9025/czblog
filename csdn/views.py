@@ -23,75 +23,56 @@ def index(request):
             # print response.encoding
             return response.text
 
-    def get_py(res):
+    def get_py(res, lists):
         res = res.result()
         html = etree.HTML(res)
-        # 不包含特定元素的，这里排除为隐藏的元素
-        result = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/h4/a')
-        for li in result:
+        # 不包含特定元素的，这里排除为隐藏的元素；div的列表
+        # 标题
+        article = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/h4/a')
+        # 摘要
+        content = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/p/a')
+        # 发布时间
+        times=html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/div/p[1]/span')
+        # 阅读数
+        cous=html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/div/p[2]/span')
+        # 评论数
+        comens=html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/div/p[3]/span')
+        for i in range(len(article)):
             mycsdn = {}
-            title = li.xpath('./text()')
-            if len(title):
-                mycsdn['tt'] = title[1].strip()
-                mycsdn['urls'] = li.xpath('./@href')[0]
-                py_title.append(mycsdn)
+            # 标题
+            mycsdn['tt'] = article[i].xpath('./text()')[1].strip()
+            # 链接地址
+            mycsdn['urls'] = article[i].xpath('./@href')[0]
+            # 摘要
+            mycsdn['cont'] = content[i].xpath('./text()')[0].strip()
+            # 发布时间
+            mycsdn['times']=times[i].xpath('./text()')[0]
+            # 阅读数
+            mycsdn['cous']=cous[i].xpath('./text()')[0]
+            # 评论数
+            mycsdn['comens']=comens[i].xpath('./text()')[0]
+            lists.append(mycsdn)
+
+
+    def get_info(res):
+        get_py(res, py_title)
 
     def get_rfs(res):
-        res = res.result()
-        html = etree.HTML(res)
-        # 不包含特定元素的，这里排除为隐藏的元素
-        result = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/h4/a')
-        for li in result:
-            mycsdn = {}
-            title = li.xpath('./text()')
-            if len(title):
-                mycsdn['tt'] = title[1].strip()
-                mycsdn['urls'] = li.xpath('./@href')[0]
-                rfs_title.append(mycsdn)
+        get_py(res, rfs_title)
 
     def get_jmeter(res):
-        res = res.result()
-        html = etree.HTML(res)
-        # 不包含特定元素的，这里排除为隐藏的元素
-        result = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/h4/a')
-        for li in result:
-            mycsdn = {}
-            title = li.xpath('./text()')
-            if len(title):
-                mycsdn['tt'] = title[1].strip()
-                mycsdn['urls'] = li.xpath('./@href')[0]
-                jmeter_title.append(mycsdn)
+        get_py(res, jmeter_title)
 
     def get_function(res):
-        res = res.result()
-        html = etree.HTML(res)
-        # 不包含特定元素的，这里排除为隐藏的元素
-        result = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/h4/a')
-        for li in result:
-            mycsdn = {}
-            title = li.xpath('./text()')
-            if len(title):
-                mycsdn['tt'] = title[1].strip()
-                mycsdn['urls'] = li.xpath('./@href')[0]
-                function_title.append(mycsdn)
+        get_py(res, function_title)
 
     def get_interface(res):
-        res = res.result()
-        html = etree.HTML(res)
-        # 不包含特定元素的，这里排除为隐藏的元素
-        result = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/h4/a')
-        for li in result:
-            mycsdn = {}
-            title = li.xpath('./text()')
-            if len(title):
-                mycsdn['tt'] = title[1].strip()
-                mycsdn['urls'] = li.xpath('./@href')[0]
-                interface_title.append(mycsdn)
+        get_py(res, interface_title)
 
     with ThreadPoolExecutor(10) as p:
         uri = "https://blog.csdn.net/cz9025/article/category/"
         # python
-        p.submit(get_index, uri + '6810218').add_done_callback(get_py)
+        p.submit(get_index, uri + '6810218').add_done_callback(get_info)
         # RF+SE
         p.submit(get_index, uri + '6810219').add_done_callback(get_rfs)
         # JMETER

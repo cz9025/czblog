@@ -19,6 +19,8 @@ def usercenter(request, name):
         return redirect('/login/')
     # 查用户的信息,需要把用户的信息带过去
     user = User.objects.get(username=name)
+    print type(user.birthday)
+    print type(user.last_login)
 
     # 修改资料请求
     if request.POST:

@@ -10,14 +10,11 @@
     <div class="container">
         <h2 class="blog-title">{{ blog.title }}</h2>
         <br>
-
         <div class="userbar">
             <div class="fl">
-                <span class="utime">{{ blog.ctime |date:"Y年m月d日 H:i:s"}}</span>
-
+                <span class="utime">{{ blog.ctime |date:"Y年m月d日 H:i:s" }}</span>
             </div>
             <div class="fr text-primary"> {{ blog.rcount }} 阅读</div>
-
         </div>
         <br>
         <br>
@@ -25,12 +22,11 @@
             {{ blog.content|safe }}
         </div>
 
-
         <span class="">个人分类：<a class="marks" href="{% url 'blog:marks' blog.marks %}">{{ blog.marks }}</a></span>
-        {#        需要加个判断，不能给自己的文章点赞#}
+        {# 需要加个判断，不能给自己的文章点赞#}
         {% ifequal blog.uname_id request.user.username %}
             <span class="pull-right text-primary">已{{ blog.like }}个赞啦 </span>
-            {% else %}
+        {% else %}
             <a class="pull-right" id="likes" href="javascript:void(0);"> 点赞</a>
             <span id="zan" class="pull-right">{{ blog.like }} </span>
 
@@ -45,12 +41,12 @@
                             success: function (data) {
                                 //1没有点赞，2点过赞
 
-                                if (data == '1') {
+                                if (data.toString() == "1") {
                                     $('#zan').text(parseInt({{ blog.like }}) + 1);
 
                                 }
                                 if (data == '2') {
-                                    {#$("#likes").innerText="已赞";#}
+                                    {#$("#likes").attr("title","您已点过赞啦！");#}
                                     alert("您已经点过赞了");
                                 }
                             }
@@ -84,44 +80,38 @@
                                 {% ifequal com.uses request.user.username %}
 
                                     <span class="fr">
-                                        <a class="a-del" onclick="delComm({{ com.id }})"
-                                           href="javascript:">删 除</a>
+                                        <a class="a-del" onclick="deleteComments({{ com.id }})"
+                                           href="javascript:void(0);">删 除</a>
 
                                     </span>
                                 {% endifequal %}
                             </p>
                         </li>
-
                     {% endfor %}
                 </ul>
-
             </div>
         </div>
         <script type="text/javascript">
             {#删除自己的评论#}
             $(function () {
-                delComm = function (id) {
+                deleteComments = function (id) {
                     $.ajax({
-                        type: "get",
                         url: "{% url 'blog:delcomm' blog.id %}",
-                        data: {"id": id},
+                        dataType: 'html',
+                        type: "get",
                         async: true,
+                        data: {"id": id},
                         success: function (data) {
-                            //1没有点赞，2点过赞
+                            alert("删除成功");
+                            console.log(data);
+                            {#window.location.reload();#}
+                            $("#com-" + id).remove();
+                            {#$("#blog_comms").load("{{ request.get_host}}{{ request.path}}#blog_comms");#}
+                            console.log("{{ request.get_host}}{{ request.path}}")
 
-                            if (data == '1') {
-                                alert("删除成功");
-                                {#window.location.reload();#}
-                                $("#com-"+id).remove();
-
-                                {#$("#blog_comms").load("{{ request.get_host}}{{ request.path}}#blog_comms");#}
-                                console.log("{{ request.get_host}}{{ request.path}}#blog_comms")
-
-                            }
-                            if (data == '2') {
-
-                                alert("删除失败");
-                            }
+                        }, error: function (e) {
+                            alert("删除失败");
+                            console.log(e);
                         }
                     });
                 }

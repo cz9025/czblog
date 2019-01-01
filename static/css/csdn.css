@@ -4,24 +4,40 @@ ul.newul {
 }
 
 ul.newul li {
-    margin: 15px 0;
+    padding: 15px 10px;
+    border-bottom: #eee solid 1px;
+}
+
+ul.newul li p {
+    margin: 0;
+    margin-top: 5px;
+}
+
+ul.newul li p > span {
+    margin-right: 15px;
+    color: #6b6b6b;
 }
 
 ul.newul li h2 {
-    line-height: 26px;
+    line-height: 24px;
     font-size: 18px;
     font-weight: bold;
-    margin: 5px 0;
+    margin: 0 0 5px;
     /*color: #333333;*/
 }
 
 ul.newul li a {
-    color: #666666;
+    color: #3d3d3d;
+}
+
+ul.newul li > a {
+    color: #999999;
 }
 
 ul.newul li a:hover {
-    color: #0A7EC3;
+    color: #a51e1e;
 }
-h4{
-    /*font-weight: bold;*/
+
+.container h4 {
+    font-weight: bold;
 }

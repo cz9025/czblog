@@ -75,7 +75,8 @@ def blog_page(request, blog_id):
         # 阅读量+1
         blog.rcount = blog.rcount + 1
         blog.save()
-    except:
+    except Exception, e:
+        print 'blog_page==>>>>error>>>>>', e
         return render(request, 'error.html')
 
     # 评论
@@ -112,6 +113,7 @@ def blog_page(request, blog_id):
 def ulike(request, blog_id):
     # if request.GET:
     # 判断当前用户是否点赞
+
     if not request.user.is_authenticated:
         return redirect('/login/')
 
@@ -127,9 +129,9 @@ def ulike(request, blog_id):
         # 保存谁点赞的
         models.Likes.objects.create(like_user=name, like_title=blike.title, like_id=blog_id)
         print ("点赞成功:::::", blike.like)
-        return HttpResponse(1)
+        return HttpResponse("1")
     else:
-        return HttpResponse(2)
+        return HttpResponse("2")
 
 
 # 删除自己的评论   查询语句需再优化
