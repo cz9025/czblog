@@ -25,9 +25,9 @@ SECRET_KEY = 'r(fr67s$j2k0$fh63wq_!+$4kl%fwo5ygq8!q%9agjh5jl_z^u'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 # 开发环境
-DEBUG = True
+# DEBUG = True
 # 生产环境
-# DEBUG = False
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -83,12 +83,12 @@ WSGI_APPLICATION = 'czblog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
+# 开发环境使用save_data     服务器环境使用czblog
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'czblog',
-        'NAME': 'save_data',
+        'NAME': 'czblog',
+        # 'NAME': 'save_data',
         'USER': 'root',
         'PASSWORD': 'Cheng-pl,0okm',
         'HOST': '127.0.0.1',
@@ -135,11 +135,6 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    # os.path.join(BASE_DIR, 'blog', 'static'),
-    # os.path.join(BASE_DIR, 'center', 'static'),
-    # os.path.join(BASE_DIR, 'news', 'static'),
-    # os.path.join(BASE_DIR, 'myblog', 'static'),
-
 ]
 
 AUTH_USER_MODEL = 'blog.User'
