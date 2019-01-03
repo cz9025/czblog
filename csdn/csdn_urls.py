@@ -10,8 +10,8 @@ from . import views
 urlpatterns = [
 
     # 首页
-    url(r'^$', views.index, name='index'),
-    # url(r'^details/', views.index, name='details'),
+    url(r'', views.index, name='index'),
+    # url(r'^(?P<dataurl>.*?)$', views.details, name='details'),
 
 
 ]

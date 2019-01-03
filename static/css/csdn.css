@@ -1,6 +1,6 @@
 ul.newul {
     list-style: none;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
 }
 
 ul.newul li {
@@ -40,4 +40,63 @@ ul.newul li a:hover {
 
 .container h4 {
     font-weight: bold;
+}
+
+/*左侧的标题开始*/
+.pleft {
+    float: left;
+    /*width: 230px;*/
+    /*margin-top: 40px;*/
+}
+
+.ulist {
+    padding: 0;
+}
+
+.ulist li {
+    border-bottom: 1px solid #c7d6e5;
+
+}
+
+.ulist li.current a {
+    background: url(../img/arrow.png) no-repeat right center;
+    color: #38b774;
+}
+
+.ulist li a {
+    display: block;
+    padding: 12px 0;
+    color: #444866;
+    overflow: hidden;
+
+}
+.aside-title{
+    display: block;
+        font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #3399ea;
+}
+.ulist li a .btl{
+    /*float: left;*/
+    font-weight: bold;
+    font-size: 16px;
+}
+.ulist li a .btr{
+    /*float: right;*/
+}
+.ulist a:hover {
+    color: #38b774;
+}
+
+.ulist a em {
+    font-size: 12px;
+    font-style: normal;
+}
+
+/*左侧标题结束*/
+
+/*右侧内容开始*/
+.newul {
+    float: right;
 }

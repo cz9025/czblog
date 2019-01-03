@@ -3,24 +3,61 @@
 {% block title %} csdn中cz9025的博客{% endblock %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/csdn.css' %}">
+    <script type="text/javascript" src="{% static 'js/csdn.js' %}"></script>
+
     <style type="text/css">
         .csdn {
             background-color: #e7e7e7;
         }
-
     </style>
 {% endblock %}
-
-
 {% block content %}
 
     <div class="container">
-
-
-        <h4>说明：本页内容是在CSDN中爬取用户cz9025的博客数据</h4>
+        <h4 id="mycsdn">说明：本页内容是在CSDN中爬取用户cz9025的博客数据</h4>
         <br>
-        <h4>python模块：</h4>
-        <ul class="newul">
+        <div class="pleft col-md-2 col-lg-2">
+            <span class="aside-title">个人分类：</span>
+            <ul class="ulist">
+                {#            <li>{% csrf_token %}</li>#}
+
+                {% for bt in bti %}
+                    <li>
+                        <a href="javascript:;" data-url="{{ bt.aurl }}"><span class="btl">{{ bt.biaoti }}</span> <span
+                                class="btr">({{ bt.cout }})</span></a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <script>
+
+            $(function () {
+
+
+                $('.ulist>li>a').on('click', function () {
+                    var dataurl = $(this).attr('data-url');
+                    $.ajax({
+                        type: "POST",
+                        dataType: "json",
+                        url: "{% url 'csdn:index' %}",
+                        data: {"dataurl": dataurl},
+                        async: true,
+                        success: function (data) {
+
+                            console.log(data.msg);
+
+                        }, error: function (data) {
+                            alert("error");
+                            console.log(data);
+                        }
+                    });
+                });
+
+            });
+        </script>
+
+        <ul id="contents" class="newul col-md-10 col-lg-10">
             {% for ti in python %}
 
                 <li>
@@ -34,7 +71,7 @@
             {% endfor %}
         </ul>
 
-        <h4>功能测试模块：</h4>
+
         <ul class="newul">
             {% for ti in fun %}
 
@@ -48,7 +85,7 @@
             {% endfor %}
         </ul>
 
-        <h4>Jmeter模块：</h4>
+
         <ul class="newul">
             {% for ti in jmeter %}
 
@@ -62,7 +99,7 @@
             {% endfor %}
         </ul>
 
-        <h4>Robot Framework自动化测试模块：</h4>
+
         <ul class="newul">
             {% for ti in rfs %}
 
@@ -76,7 +113,6 @@
             {% endfor %}
         </ul>
 
-        <h4>接口测试模块：</h4>
         <ul class="newul">
             {% for ti in intf %}
 
