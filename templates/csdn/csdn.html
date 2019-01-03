@@ -13,28 +13,25 @@
 {% endblock %}
 {% block content %}
 
-    <div class="container">
+    <div class="container" id="csdn">
         <h4 id="mycsdn">说明：本页内容是在CSDN中爬取用户cz9025的博客数据</h4>
         <br>
         <div class="pleft col-md-2 col-lg-2">
             <span class="aside-title">个人分类：</span>
             <ul class="ulist">
-                {#            <li>{% csrf_token %}</li>#}
-
                 {% for bt in bti %}
                     <li>
-                        <a href="javascript:;" data-url="{{ bt.aurl }}"><span class="btl">{{ bt.biaoti }}</span> <span
-                                class="btr">({{ bt.cout }})</span></a>
+                        <a href="javascript:void(0);" data-url="{{ bt.aurl }}">
+                            <span class="btl">{{ bt.biaoti }}</span>
+                            <span class="btr">({{ bt.cout }})</span>
+                        </a>
                     </li>
                 {% endfor %}
             </ul>
         </div>
 
         <script>
-
             $(function () {
-
-
                 $('.ulist>li>a').on('click', function () {
                     var dataurl = $(this).attr('data-url');
                     $.ajax({
@@ -43,38 +40,38 @@
                         url: "{% url 'csdn:index' %}",
                         data: {"dataurl": dataurl},
                         async: true,
+                        beforeSend: function () {
+                            $("#mask").css("display", "block");
+                            {#$("#contents").hide().after('<img id="pics" src="{% static "img/con1.jpg" %}" alt="">');#}
+                            {#alert("666开始");#}
+                        },
                         success: function (data) {
+                            con = "";
+                            $.each(data.msg, function (index, item) {
+                                con += '<li><h2><a target="_blank" href="' + item.urls + '">' + item.tt + '</a></h2>';
+                                con += '<a target="_blank" href="' + item.urls + '">' + item.cont + '</a>';
+                                con += '<p><span>' + item.times + '</span> <span>' + item.cous + '</span> <span>' + item.comens + '</span></p></li>';
+                            });
 
-                            console.log(data.msg);
+                            $("#contents").html(con);
 
                         }, error: function (data) {
                             alert("error");
                             console.log(data);
+                        },
+                        complete: function () {
+                            $("#mask").css("display", "none");
+                            {#$("#contents").show();#}
+                            {#alert("666结束");#}
                         }
                     });
                 });
-
             });
         </script>
 
         <ul id="contents" class="newul col-md-10 col-lg-10">
+
             {% for ti in python %}
-
-                <li>
-                    <h2>
-                        <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
-
-                    </h2>
-                    <a target="_blank" href="{{ ti.urls }}">{{ ti.cont }}</a>
-                    <p><span>{{ ti.times }}</span> <span>{{ ti.cous }}</span> <span>{{ ti.comens }}</span></p>
-                </li>
-            {% endfor %}
-        </ul>
-
-
-        <ul class="newul">
-            {% for ti in fun %}
-
                 <li>
                     <h2>
                         <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
@@ -85,46 +82,9 @@
             {% endfor %}
         </ul>
 
-
-        <ul class="newul">
-            {% for ti in jmeter %}
-
-                <li>
-                    <h2>
-                        <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
-                    </h2>
-                    <a target="_blank" href="{{ ti.urls }}">{{ ti.cont }}</a>
-                    <p><span>{{ ti.times }}</span> <span>{{ ti.cous }}</span> <span>{{ ti.comens }}</span></p>
-                </li>
-            {% endfor %}
-        </ul>
-
-
-        <ul class="newul">
-            {% for ti in rfs %}
-
-                <li>
-                    <h2>
-                        <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
-                    </h2>
-                    <a target="_blank" href="{{ ti.urls }}">{{ ti.cont }}</a>
-                    <p><span>{{ ti.times }}</span> <span>{{ ti.cous }}</span> <span>{{ ti.comens }}</span></p>
-                </li>
-            {% endfor %}
-        </ul>
-
-        <ul class="newul">
-            {% for ti in intf %}
-
-                <li>
-                    <h2>
-                        <a target="_blank" href="{{ ti.urls }}">{{ ti.tt }}</a>
-                    </h2>
-                    <a target="_blank" href="{{ ti.urls }}">{{ ti.cont }}</a>
-                    <p><span>{{ ti.times }}</span> <span>{{ ti.cous }}</span> <span>{{ ti.comens }}</span></p>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="mask" id="mask">
+            <img class="login" id="pics" src="{% static 'img/waitimg.jpg' %}">
+        </div>
     </div>
 
 {% endblock %}

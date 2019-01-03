@@ -61,7 +61,7 @@ def index(request):
         # 根据编号再次发起请求，获得分类下的内容
         p.submit(get_index, uri + str(dataurl)).add_done_callback(get_py)
 
-        time.sleep(0.5)
+        time.sleep(1)
         # 如果列表还是为空的话，再休眠几秒钟
         if not column_title:
             time.sleep(3)
@@ -69,7 +69,7 @@ def index(request):
         column = dict()
         column["result"]=10000
         column["msg"] = column_title
-        print column
+        # print column
         # 默认只能传递字典类型，如果要传递非字典类型需要设置一下safe关键字参数。
         return JsonResponse(column)
 
