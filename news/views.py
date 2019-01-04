@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
-from django.contrib.auth.models import User
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
 from . import models
 from concurrent.futures import ThreadPoolExecutor
 from lxml import etree
@@ -15,7 +11,6 @@ import requests
 import time
 
 
-# Create your views here.
 def qindex121(request):
     all_title = []
     list_time = str(time.time()).split('.')
@@ -98,7 +93,7 @@ def index(request):
             # print atext[0], uri + ahref[0], a_img
             mynews['tt'] = atext[0]
             mynews['urls'] = uri + ahref[0]
-            mynews['img'] = a_img[0]
+            # mynews['img'] = a_img[0]
             paper_title.append(mynews)
 
     def baidu_news(res):
@@ -132,7 +127,7 @@ def index(request):
                 mynews['urls'] = a.xpath('./@href')[0]
                 car_title.append(mynews)
 
-    with ThreadPoolExecutor(max_workers=4) as p:
+    with ThreadPoolExecutor(10) as p:
         # 新浪军情
         p.submit(get_index, 'https://mil.news.sina.com.cn/').add_done_callback(sina_news)
         # 国内新闻

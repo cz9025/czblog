@@ -43,7 +43,6 @@
                         beforeSend: function () {
                             $("#mask").css("display", "block");
                             {#$("#contents").hide().after('<img id="pics" src="{% static "img/con1.jpg" %}" alt="">');#}
-                            {#alert("666开始");#}
                         },
                         success: function (data) {
                             con = "";
@@ -62,7 +61,6 @@
                         complete: function () {
                             $("#mask").css("display", "none");
                             {#$("#contents").show();#}
-                            {#alert("666结束");#}
                         }
                     });
                 });
@@ -83,7 +81,7 @@
         </ul>
 
         <div class="mask" id="mask">
-            <img class="login" id="pics" src="{% static 'img/waitimg.jpg' %}">
+            <img class="login" id="pics" src="{% static 'img/waitimg.jpg' %}" alt="">
         </div>
     </div>
 

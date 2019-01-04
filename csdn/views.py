@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from lxml import etree
+
 from concurrent.futures import ThreadPoolExecutor
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
+from lxml import etree
 import requests
 import re
 import time
@@ -67,9 +68,8 @@ def index(request):
             time.sleep(3)
 
         column = dict()
-        column["result"]=10000
+        column["result"] = 10000
         column["msg"] = column_title
-        # print column
         # 默认只能传递字典类型，如果要传递非字典类型需要设置一下safe关键字参数。
         return JsonResponse(column)
 
