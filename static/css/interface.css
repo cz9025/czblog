@@ -1,0 +1,14 @@
+.interface {
+    background-color: #e7e7e7;
+}
+.forms li,.forms{
+    margin: 10px;
+    /*overflow: hidden;*/
+}
+.kv{
+    margin: 10px;
+}
+.result{
+    overflow: hidden;
+    width: 100%;
+}

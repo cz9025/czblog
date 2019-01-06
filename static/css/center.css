@@ -1,3 +1,10 @@
+.user span {
+    display: inline-block;
+    min-width: 70px;
+    text-align: justify;
+    text-align-last: justify;
+}
+
 ul {
     padding: 0 100px;
 }
@@ -131,34 +138,36 @@ a:hover {
     height: 30px;
     line-height: 30px;
 }
-.other-info .top-close .cls{
+
+.other-info .top-close .cls {
     cursor: pointer;
     float: right;
     width: 60px;
     height: 30px;
 }
 
-.other-info .info-con{
+.other-info .info-con {
     width: 100%;
     height: 364px;
     background-color: #eee;
 }
 
-.info-con .ulist{
+.info-con .ulist {
     list-style: none;
     padding: 10px;
 }
-.info-con .ulist li{
+
+.info-con .ulist li {
     line-height: 25px;
     margin: 10px;
 }
 
-.info-con .ulist li>span{
+.info-con .ulist li > span {
     display: inline-block;
     min-width: 70px;
     text-align-last: justify;
 }
 
-.info-con .ulist label{
-font-weight: normal;
+.info-con .ulist label {
+    font-weight: normal;
 }

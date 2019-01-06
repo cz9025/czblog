@@ -2,85 +2,168 @@
 {% load static %}
 {% block title %} 接口测试 {% endblock %}
 {% block css %}
-<script type="text/javascript" src="{% static 'js/news.js' %}"></script>
-<link rel="stylesheet" href="{% static 'css/news.css' %}">
-<style type="text/css">
-    .interface {
-        background-color: #e7e7e7;
-    }
+    <script type="text/javascript" src="{% static 'js/news.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/interface.css' %}">
+    <style>
+        pre {
+            outline: 1px solid #ccc;
+            padding: 5px;
+            margin: 5px;
+        }
 
+        .string {
+            color: green;
+        }
 
-</style>
+        .number {
+            color: darkorange;
+        }
+
+        .boolean {
+            color: blue;
+        }
+
+        .null {
+            color: magenta;
+        }
+
+        .key {
+            color: red;
+        }
+    </style>
 {% endblock %}
 
 
 {% block content %}
 
-<div class="container">
+    <div class="container">
+        <ul class="forms form-group col-lg-10 col-md-10 col-sm-10">
+            <li>
+                <label for="urls">URL：要加上路径/a/b </label>
+                <input type="text" class="form-control" id="urls" placeholder="url"
+                       value="http://t.weather.sojson.com/api/weather/city/101030100">
+            </li>
+            <li>
+                <label for="header">Header：默认{'Content-Type': 'text/html'}</label>
+                <input type="text" class="form-control" id="header" placeholder="header">
+            </li>
+            <li>
+                <div class="form-inline" id="datas">
+                    <div class="form-group kv">
+                        <label>K：</label>
+                        <input type="text" class="form-control keys" placeholder="k">
+                        <label>&nbsp; V：</label>
+                        <input type="text" class="form-control vals" placeholder="v">
+                    </div>
+                    <input type="button" class=" btn btn-primary" id="add-data" value="+">
+                    <input type="button" class=" btn btn-primary" id="del-data" value="-">
+                </div>
+            </li>
+            <li>
+                <button type="button" class="btn btn-primary" id="send">Send</button>
+            </li>
+        </ul>
+        <pre class="result" id="txt">
+{#            <code></code>#}
+        </pre>
+    </div>
 
-    <form class="form-inline">
-        {% csrf_token %}
-        <div class="row ">
+    <script type="text/javascript">
 
+        $(function () {
 
-            <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                <label for="url">URL </label>
-                <input type="text" class="form-control" id="url" placeholder="url" style="width: 90%;">
-            </div>
-        </div>
-
-
-        <div class="row ">
-            <div class="form-group">
-                <label for="k1">k</label>
-                <input type="text" class="form-control" id="k1" placeholder="k">
-            </div>
-            <div class="form-group">
-                <label for="v1">v</label>
-                <input type="text" class="form-control" id="v1" placeholder="v">
-            </div>
-            <div class="form-group">
-
-                <input type="button" class="form-control btn btn-default" id="v2" value="添加">
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-default">Send</button>
-    </form>
-
-
-    <div id="txt"></div>
-</div>
-
-<script type="text/javascript">
-
-    $(function () {
-
-        delComm = function () {
-            $.ajax({
-                type: "post",
-                url: "{% url 'interface:get' %}",
-                data: {
-                    csrfmiddlewaretoken: $("input:first").val(),
-                    urls: $('#urls').val(),
-                    title: $('#title').val()
-
-                },
-                async: true,
-                success: function (data) {
-
-                    data = JSON.parse(data);
-
-                    if (data['status'] == 10000) {
-                        $('#txt').html(data['data']);
-                    }
-
-
+            divs = '<div class="form-group kv">' + $("#datas").children().html() + '</div>';
+            {#添加数据按钮#}
+            $("#add-data").click(function () {
+                $("#datas").append(divs);
+            });
+            {#删除数据栏按钮#}
+            $("#del-data").click(function () {
+                var gud = $("#datas").children().length;
+                if (gud > 3) {
+                    $("#datas div:last").remove();
+                } else {
+                    alert("必须保留一个");
                 }
             });
-        }
-    });
-</script>
+
+            function syntaxHighlight(json) {
+                if (typeof json != 'string') {
+                    json = JSON.stringify(json, undefined, 4);
+                }
+                json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+                return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+                    function (match) {
+                        var cls = 'number';
+                        if (/^"/.test(match)) {
+                            if (/:$/.test(match)) {
+                                cls = 'key';
+                            } else {
+                                cls = 'string';
+                            }
+                        } else if (/true|false/.test(match)) {
+                            cls = 'boolean';
+                        } else if (/null/.test(match)) {
+                            cls = 'null';
+                        }
+                        return '<span class="' + cls + '">' + match + '</span>';
+                    });
+            }
+
+            $("#send").click(
+                function () {
+                    var reqdata = {};
+                    var ks = "";
+
+                    $.each($(".kv"), function (index, item) {
+                        ks = $(item).children('.keys').val();
+                        if (ks) {
+                            reqdata[ks] = $(item).children('.vals').val();
+                        }
+                    });
+                    {#csrfmiddlewaretoken: $("input:first").val(),#}
+                    var strs = "";
+                    for (var k in reqdata) {
+                        {#拼接成字符串#}
+                        strs += "&" + k + "=" + reqdata[k];
+                    }
+                    if (reqdata.length === 0) {
+                        strs = "";
+                    }
+                    $.ajax({
+                        type: "post",
+                        url: "{% url 'interface:get' %}",
+                        data: {
+                            urls: $('#urls').val(),
+                            datas: strs,
+                            headers: $("#header").val(),
+
+                        },
+                        async: true,
+                        dataType: "json",
+                        success: function (data) {
+                            {#alert(typeof data);#}
+                            re = new RegExp(",","g");
+
+                            var Newstr = syntaxHighlight(data.data).replace(re, ",<br/>");
+
+                            $("#txt").html(Newstr);
+                            {#$("#txt").html(JSON.stringify(data, null, 4));#}
+
+                            {#syntaxHighlight(data.data)#}
+                            {#JSON.stringify(data.data, null, 2);#}
+
+
+                        }, error: function (data) {
+                            alert(data);
+                        }
+                    });
+                }
+            );
+
+
+        });
+    </script>
 
 {% endblock %}
 

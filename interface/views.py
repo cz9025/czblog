@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, HttpResponse
+from django.http import JsonResponse
 import json
 import requests
 
@@ -16,13 +17,16 @@ def index(request):
 def interface_get(request):
     if request.POST:
         urls = request.POST.get('urls')
-        title = request.POST.get('title')
-        print title
-        # request.session['title'] = title
+        params = request.POST.get('datas')
+        headers = request.POST.get('headers', {'Content-Type': 'text/html'})
 
-        response = requests.get(urls)
-        resp = {'status': 10000, 'data': response.text}
+        # headers = {'Content-Type': 'text/html'}
+        response = requests.get(url=urls, params=params, headers=headers)
+        print response.url
 
-        return HttpResponse(json.dumps(resp))
+        print response.encoding
+        resp = {'status': 10000, 'data': response.text.encode(response.encoding)}
+
+        return JsonResponse(resp)
         # print title
     return render(request, 'interface/interface.html')
