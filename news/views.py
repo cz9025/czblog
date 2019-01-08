@@ -93,7 +93,7 @@ def index(request):
             # print atext[0], uri + ahref[0], a_img
             mynews['tt'] = atext[0]
             mynews['urls'] = uri + ahref[0]
-            # mynews['img'] = a_img[0]
+            mynews['img'] = a_img[0]
             paper_title.append(mynews)
 
     def baidu_news(res):
