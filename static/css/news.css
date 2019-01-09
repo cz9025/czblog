@@ -41,3 +41,56 @@ ul.newul li img {
 
     height: 160px;
 }
+
+/*=============华丽的分界线=============*/
+.foucsBox {
+    margin: 0 auto;
+    width: 600px;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+}
+
+.foucsBox ul {
+    width: 1000%;
+    float: left;
+}
+
+.foucsBox ul li a {
+    display: inline-block;
+    width: 600px;
+    height: 400px;
+    position: relative;
+}
+
+.foucsBox ul li p {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    color: white;
+    font-size: 24px;
+    text-align: center;
+}
+
+.foucsBox .lbtn {
+    position: absolute;
+    width: 34px;
+    height: 56px;
+    top: 183px;
+    left: 0;
+    z-index: 1;
+    background: url(../img/arrLeftFocus.png) no-repeat rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
+
+.foucsBox .rbtn {
+    position: absolute;
+    width: 34px;
+    height: 56px;
+    top: 183px;
+    right: 0;
+    z-index: 1;
+    background: url(../img/arrRigFocus.png) no-repeat rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+}
