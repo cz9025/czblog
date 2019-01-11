@@ -4,6 +4,7 @@
 {% block css %}
     <script type="text/javascript" src="{% static 'js/news.js' %}"></script>
     <link rel="stylesheet" href="{% static 'css/news.css' %}">
+    {#    <script type="text/javascript" src=""></script>#}
     <style type="text/css">
         .news {
             background-color: #e7e7e7;
@@ -30,6 +31,19 @@
                 {% endfor %}
             </ul>
             <span class="rbtn"></span>
+        </div>
+
+        <div class="zcnews">
+            <h3>房产资讯</h3>
+            <ul>
+                {% for lc in people %}
+                    <li>
+                        <h4><a target="_blank" href="{{ lc.a_href }}">{{ lc.a_title }}</a></h4>
+                        <p><a target="_blank" href="{{ lc.a_href }}">{{ lc.gray }}</a></p>
+                    </li>
+                {% endfor %}
+            </ul>
+
         </div>
 
     </div>

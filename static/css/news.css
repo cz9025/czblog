@@ -94,3 +94,35 @@ ul.newul li img {
     background: url(../img/arrRigFocus.png) no-repeat rgba(0, 0, 0, 0.5);
     cursor: pointer;
 }
+
+/*分界线*/
+/*轮播图下方的房产文章*/
+.zcnews {
+
+    width: 600px;
+    margin: 30px auto;
+
+}
+.zcnews>h3{
+    display: inline-block;
+    color: black;
+    background-color: red;
+}
+
+.zcnews ul li {
+    margin-bottom: 20px;
+}
+
+.zcnews ul li h4 a {
+    color: black;
+    font-weight: bold;
+}
+
+.zcnews ul li p {
+    text-indent: 2em;
+
+}
+
+.zcnews ul li p a {
+    color: #8a8a8a;
+}
