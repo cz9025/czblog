@@ -18,34 +18,45 @@
 {% block content %}
 
     <div class="container">
-        <div class="foucsBox">
-            <span class="lbtn"></span>
-            <ul>
-                {% for ti in banana %}
-                    <li>
-                        <a target="_blank" href="{{ ti.href }}">
-                            <P class="banana-title">{{ ti.txt }}</P>
-                            <img src="{{ ti.img }}" alt="{{ ti.txt }}">
-                        </a>
-                    </li>
-                {% endfor %}
-            </ul>
-            <span class="rbtn"></span>
+
+        <div style="float: left;margin-left: 15px;">
+
+            <div class="foucsBox">
+                <span class="lbtn"></span>
+                <ul>
+                    {% for ti in banana %}
+                        <li>
+                            <a target="_blank" href="{{ ti.href }}">
+                                <P class="banana-title">{{ ti.txt }}</P>
+                                <img src="{{ ti.img }}" alt="{{ ti.txt }}">
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <span class="rbtn"></span>
+            </div>
+
+            <div class="people">
+                <h3>房产资讯（出自人民网）</h3>
+                <ul>
+                    {% for lc in people %}
+                        <li>
+                            <h4><a target="_blank" href="{{ lc.a_href }}">{{ lc.a_title }}</a></h4>
+                            <p><a target="_blank" href="{{ lc.a_href }}">{{ lc.gray }}</a></p>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
         </div>
-
-        <div class="zcnews">
-            <h3>房产资讯</h3>
+        <div class="bdnews">
             <ul>
-                {% for lc in people %}
-                    <li>
-                        <h4><a target="_blank" href="{{ lc.a_href }}">{{ lc.a_title }}</a></h4>
-                        <p><a target="_blank" href="{{ lc.a_href }}">{{ lc.gray }}</a></p>
-                    </li>
+                {% for news in baidu %}
+                    <li><a target="_blank" href="{{ news.a_href }}">{{ news.a_title }}</a></li>
                 {% endfor %}
+
             </ul>
-
         </div>
-
     </div>
 
 {% endblock %}

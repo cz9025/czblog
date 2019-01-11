@@ -20,7 +20,7 @@ def index(request):
     banana = []
     people = []
     paper_title = []
-    baidu_title = []
+    baidu = []
     car_title = []
 
     def get_pyquery(url):
@@ -65,7 +65,7 @@ def index(request):
             a = news.find("strong a")
             if a:
                 a_title = a.text()
-                a_href ="http://house.people.com.cn" + a.attr("href")
+                a_href = "http://house.people.com.cn" + a.attr("href")
                 gray = news.find("p a").text()
 
                 mydata = {
@@ -76,12 +76,25 @@ def index(request):
                 print mydata
                 people.append(mydata)
 
+    def bd_news(res):
+        """百度新闻"""
+        pq = res.result()
+        top = pq("#pane-news>div>ul").find("li")
+        bot = pq("#pane-news>ul:first").find("li")
+        strs = top + bot
+        for i in strs.items():
+            mydata = {
+                "a_title": i.find("a").html(),
+                "a_href": i.find("a").attr("href")
+            }
+            baidu.append(mydata)
+
     with ThreadPoolExecutor(10) as p:
         # 轮播图
         p.submit(get_pyquery, "http://world.huanqiu.com").add_done_callback(hq_banana)
-        # 和讯理财
+        # 人民网  房产
         p.submit(get_pyquery, "http://house.people.com.cn").add_done_callback(hx_money)
+        # 百度新闻
+        p.submit(get_pyquery, "https://news.baidu.com").add_done_callback(bd_news)
 
-    # time.sleep(1)
-
-    return render(request, 'news/news.html', {"banana": banana, "people": people})
+    return render(request, 'news/news.html', {"banana": banana, "people": people, "baidu": baidu})

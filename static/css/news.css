@@ -96,33 +96,61 @@ ul.newul li img {
 }
 
 /*分界线*/
-/*轮播图下方的房产文章*/
-.zcnews {
-
+/*轮播图下方的人民网房产文章*/
+.people {
+    float: left;
     width: 600px;
-    margin: 30px auto;
+    margin: 0 auto;
+    position: relative;
 
 }
-.zcnews>h3{
+
+.people > h3 {
     display: inline-block;
     color: black;
     background-color: red;
 }
 
-.zcnews ul li {
+.people ul li {
     margin-bottom: 20px;
 }
 
-.zcnews ul li h4 a {
+.people ul li h4 a {
     color: black;
     font-weight: bold;
 }
 
-.zcnews ul li p {
+.people ul li p {
     text-indent: 2em;
 
 }
 
-.zcnews ul li p a {
+.people ul li p a {
     color: #8a8a8a;
+}
+
+/*房产文章的结束*/
+/*百度新闻的开始*/
+.bdnews {
+    float: left;
+    /*width: 400px;*/
+    /*height: 1000px;*/
+    /*background-color: gold;*/
+    margin-left: 15px;
+}
+
+.bdnews ul li {
+    line-height: 34px;
+    cursor: pointer;
+}
+
+.bdnews ul li a {
+    color: #555;
+    font-size: 14px;
+}
+
+.bdnews ul li:hover a {
+    /*color: blue;*/
+    border-bottom: solid #555 1px;
+    /*text-decoration: black;*/
 }
