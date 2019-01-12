@@ -25,8 +25,8 @@ SECRET_KEY = 'r(fr67s$j2k0$fh63wq_!+$4kl%fwo5ygq8!q%9agjh5jl_z^u'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 # 开发True   生产False
-DEBUG = True
-# DEBUG = False
+#DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
