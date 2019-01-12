@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse
-from django.shortcuts import redirect
-from . import models
 from concurrent.futures import ThreadPoolExecutor
-import time
+from django.shortcuts import render
 from pyquery import PyQuery
 import requests
-
-p = ThreadPoolExecutor(10)
 
 
 def index(request):
@@ -19,12 +14,12 @@ def index(request):
     }
     banana = []
     people = []
-    paper_title = []
-    baidu = []
-    car_title = []
+    baidu_net = []
+    baidu_hot = []
+    baidu_finance = []
 
     def get_pyquery(url):
-        u"""通用请求  , encoding='utf-8'"""
+        u"""通用请求"""
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             pq = PyQuery(response.content)
@@ -36,11 +31,8 @@ def index(request):
         """banana图"""
         pq = res.result()
         div = pq("#foucsBox ul.imgCon")
-        # print div.html()
         li = div.find("li")
-        # print li.html()
         for i in li.items():
-            # print i.filter("li a").html()
             img = i.find("a").eq(0).find("img").attr("src")
             a = i.find(".imgTitle>a")
             href = a.attr("href")
@@ -51,33 +43,27 @@ def index(request):
                     "href": href,
                     "img": img
                 }
-                # print txt, href
-                # print img
                 banana.append(mydata)
 
     def hx_money(res):
         """人民网"""
         pq = res.result()
-        # pq = PyQuery(div)
-
-        headingNews = pq('.headingNews_box .headingNews:first').find(".hdNews")
-        for news in headingNews.items():
+        hdnews = pq('.headingNews_box .headingNews:first').find(".hdNews")
+        for news in hdnews.items():
             a = news.find("strong a")
             if a:
                 a_title = a.text()
                 a_href = "http://house.people.com.cn" + a.attr("href")
                 gray = news.find("p a").text()
-
                 mydata = {
                     "a_title": a_title,
                     "a_href": a_href,
                     "gray": gray
                 }
-                print mydata
                 people.append(mydata)
 
-    def bd_news(res):
-        """百度新闻"""
+    def bd_hot_news(res):
+        """百度新闻  热点要闻"""
         pq = res.result()
         top = pq("#pane-news>div>ul").find("li")
         bot = pq("#pane-news>ul:first").find("li")
@@ -87,14 +73,46 @@ def index(request):
                 "a_title": i.find("a").html(),
                 "a_href": i.find("a").attr("href")
             }
-            baidu.append(mydata)
+            baidu_hot.append(mydata)
+
+    def bd_net_news(res):
+        """百度新闻  互联网新闻"""
+        pq = res.result()
+        titles = pq("#internet_news>ul").find("li")
+        for title in titles.items():
+            a_title = title.find("a").html()
+            a_href = title.find("a").attr("href")
+            mydata = {
+                "a_title": a_title,
+                "a_href": a_href
+            }
+            baidu_net.append(mydata)
+
+    def bd_finance_news(res):
+        """百度新闻  财经新闻"""
+        pq = res.result()
+        titles = pq("#col_focus .middle-focus-news").find("li")
+        for title in titles.items():
+            a_title = title.find("a").html()
+            a_href = title.find("a").attr("href")
+            mydata = {
+                "a_title": a_title,
+                "a_href": a_href
+            }
+            baidu_finance.append(mydata)
 
     with ThreadPoolExecutor(10) as p:
         # 轮播图
         p.submit(get_pyquery, "http://world.huanqiu.com").add_done_callback(hq_banana)
         # 人民网  房产
         p.submit(get_pyquery, "http://house.people.com.cn").add_done_callback(hx_money)
-        # 百度新闻
-        p.submit(get_pyquery, "https://news.baidu.com").add_done_callback(bd_news)
+        # 百度热点要闻
+        p.submit(get_pyquery, "https://news.baidu.com").add_done_callback(bd_hot_news)
+        # 百度互联网新闻
+        p.submit(get_pyquery, "https://news.baidu.com/tech").add_done_callback(bd_net_news)
+        # 百度财经新闻
+        p.submit(get_pyquery, "https://news.baidu.com/finance").add_done_callback(bd_finance_news)
 
-    return render(request, 'news/news.html', {"banana": banana, "people": people, "baidu": baidu})
+    return render(request, 'news/news.html',
+                  {"banana": banana, "people": people, "baidu_hot": baidu_hot, "baidu_net": baidu_net,
+                   "baidu_finance": baidu_finance})

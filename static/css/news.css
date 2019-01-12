@@ -44,7 +44,8 @@ ul.newul li img {
 
 /*=============华丽的分界线=============*/
 .foucsBox {
-    margin: 0 auto;
+    float: left;
+    /*margin: 0 auto;*/
     width: 600px;
     height: 400px;
     overflow: hidden;
@@ -53,7 +54,7 @@ ul.newul li img {
 
 .foucsBox ul {
     width: 1000%;
-    float: left;
+    /*float: left;*/
 }
 
 .foucsBox ul li a {
@@ -100,24 +101,26 @@ ul.newul li img {
 .people {
     float: left;
     width: 600px;
-    margin: 0 auto;
+    /*margin: 25px auto 0;*/
     position: relative;
-
 }
 
-.people > h3 {
+.people > h4, .net > h4, .finance > h4 {
     display: inline-block;
     color: black;
     background-color: red;
 }
 
 .people ul li {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
-
+.people ul li h4{
+    font-size: 15px;
+}
 .people ul li h4 a {
     color: black;
     font-weight: bold;
+
 }
 
 .people ul li p {
@@ -131,7 +134,7 @@ ul.newul li img {
 
 /*房产文章的结束*/
 /*百度新闻的开始*/
-.bdnews {
+.bdnews, .net, .finance {
     float: left;
     /*width: 400px;*/
     /*height: 1000px;*/
@@ -139,18 +142,26 @@ ul.newul li img {
     margin-left: 15px;
 }
 
-.bdnews ul li {
-    line-height: 34px;
+.bdnews li, .net li, .finance li {
+    line-height: 32px;
     cursor: pointer;
 }
 
-.bdnews ul li a {
-    color: #555;
+.bdnews li a, .net li a, .finance li a {
+    color: #222;
     font-size: 14px;
 }
 
-.bdnews ul li:hover a {
+.bdnews li:hover a, .net li:hover a, .finance li:hover a {
     /*color: blue;*/
-    border-bottom: solid #555 1px;
+    color: #a51e1e;
+    border-bottom: solid #a51e1e 1px;
     /*text-decoration: black;*/
+}
+
+.bdnews > h4 {
+    margin-top: 0;
+    display: inline-block;
+    color: black;
+    background-color: red;
 }

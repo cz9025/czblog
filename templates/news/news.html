@@ -9,18 +9,13 @@
         .news {
             background-color: #e7e7e7;
         }
-
-
     </style>
 {% endblock %}
-
-
 {% block content %}
 
     <div class="container">
-
-        <div style="float: left;margin-left: 15px;">
-
+        <div class="clearfix">
+            {#轮播图部分#}
             <div class="foucsBox">
                 <span class="lbtn"></span>
                 <ul>
@@ -35,28 +30,48 @@
                 </ul>
                 <span class="rbtn"></span>
             </div>
-
-            <div class="people">
-                <h3>房产资讯（出自人民网）</h3>
+            {#轮播图右侧新闻#}
+            <div class="bdnews">
+                <h4>热点要闻（摘自百度新闻）</h4>
                 <ul>
-                    {% for lc in people %}
-                        <li>
-                            <h4><a target="_blank" href="{{ lc.a_href }}">{{ lc.a_title }}</a></h4>
-                            <p><a target="_blank" href="{{ lc.a_href }}">{{ lc.gray }}</a></p>
-                        </li>
+                    {% for news in baidu_hot %}
+                        <li><a target="_blank" href="{{ news.a_href }}">{{ news.a_title }}</a></li>
                     {% endfor %}
-                </ul>
 
+                </ul>
             </div>
         </div>
-        <div class="bdnews">
+        <div style="margin-top: 20px; "></div>
+        {#房产资讯#}
+        <div class="people">
+            <h4>房产资讯（摘自人民网）</h4>
             <ul>
-                {% for news in baidu %}
-                    <li><a target="_blank" href="{{ news.a_href }}">{{ news.a_title }}</a></li>
+                {% for lc in people %}
+                    <li>
+                        <h4><a target="_blank" href="{{ lc.a_href }}">{{ lc.a_title }}</a></h4>
+                        <p><a target="_blank" href="{{ lc.a_href }}">{{ lc.gray }}</a></p>
+                    </li>
                 {% endfor %}
+            </ul>
 
+        </div>
+        <div class="net">
+            <h4>互联网新闻（摘自百度新闻）</h4>
+            <ul>
+                {% for net in baidu_net %}
+                    <li><a target="_blank" href="{{ net.a_href }}">{{ net.a_title }}</a></li>
+                {% endfor %}
             </ul>
         </div>
+        <div class="finance">
+            <h4>财经新闻（摘自百度新闻）</h4>
+            <ul>
+                {% for fin in baidu_finance %}
+                    <li><a target="_blank" href="{{ fin.a_href }}">{{ fin.a_title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+
     </div>
 
 {% endblock %}
