@@ -2,8 +2,6 @@ ul {
     list-style: none;
 }
 
-
-
 .oneline {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -29,7 +27,7 @@ h2 {
 .feedlist_id li h2 > a, .feedlist_id li .fl a {
     text-decoration: none;
     color: #3d3d3d;
-    display: block;
+    display: inline-block;
     line-height: 24px;
     height: 24px;
     word-wrap: break-word;
@@ -45,6 +43,15 @@ h2 {
 
 .feedlist_id li a:hover {
     color: #a51e1e;
+}
+
+.feedlist_id li h2 span {
+    float: left;
+    width: 31px;
+    height: 17px;
+    background-position: -172px -108px;
+    background-image: url(../img/thread_item.png);
+    margin: 3px 10px 0 0;
 }
 
 .userbar {
@@ -79,7 +86,6 @@ h2 {
 .userbar a:hover {
     color: #3399ea;
 }
-
 
 .form-search {
     float: right;

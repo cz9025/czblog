@@ -35,21 +35,22 @@
                 {% for blog in blogs %}
 
                     <li>
-                        <h2><a target="_blank" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
-                        <div class="oneline" >
+                        <h2>
+                            <a target="_blank" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
+                        <div class="oneline">
                             <a href="{% url 'blog:blog_page' blog.id %}" style="font-size: 14px;" class="summary">
                                 {{ blog.content }}
                             </a>
-
                         </div>
                         <div class="userbar">
                             <div class="fl">
-                                <a class="marks" target="_blank" href="{% url 'center:usercenter' blog.uname %}">{{ blog.uname }}</a>
+                                <a class="marks" target="_blank"
+                                   href="{% url 'center:usercenter' blog.uname %}">{{ blog.uname }}</a>
                                 <span class="little"></span>
-                                <a class="time">{{ blog.ctime |date:"Y年m月d日  H:i:s"}}</a>
+                                <a class="time">{{ blog.ctime |date:"Y年m月d日  H:i:s" }}</a>
                                 <span class="little"></span>
-								
-								<a class="marks" href="{% url 'blog:marks' blog.marks %}">{{ blog.marks }}</a>
+
+                                <a class="marks" href="{% url 'blog:marks' blog.marks %}">{{ blog.marks }}</a>
                             </div>
                             <div class="fr">
                                 <span>{{ blog.rcount }}</span> 阅读
@@ -70,7 +71,7 @@
             {% else %}
                 {% include 'paging.html' %}
             {% endif %}
-			{#{{ % include 'top.html' with mycss='acss' % }}#}
+            {#{{ % include 'top.html' with mycss='acss' % }}#}
         {% else %}
             {#没有博客，或者搜索博客为空时显示#}
             <div style="height: 300px;text-align: center;padding-top: 200px;">没有找到相关的博客，发挥你的洪荒之力吧！
