@@ -76,7 +76,7 @@ a:hover {
 .blog ul li h4 a {
     text-decoration: none;
     color: #3d3d3d;
-    display: block;
+    display: inline-block;
     line-height: 24px;
     height: 24px;
     word-wrap: break-word;
@@ -170,4 +170,13 @@ a:hover {
 
 .info-con .ulist label {
     font-weight: normal;
+}
+
+.blog>ul>li>h4>span {
+    float: left;
+    width: 31px;
+    height: 17px;
+    background-position: -172px -108px;
+    background-image: url(../img/thread_item.png);
+    margin: 3px 10px 0 0;
 }

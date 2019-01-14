@@ -48,7 +48,7 @@ def mysearch(request):
     arg_urls = request.path[0:-1] + "?title=" + title
     print (arg_urls)
     # 增加翻页
-    blogs = Blogs.objects.filter(uname=name, title__contains=title).order_by('-ctime')
+    blogs = Blogs.objects.filter(uname=name, title__contains=title).order_by('-tops','-ctime')
     # 生成paginator对象,定义每页显示10条记录
     paginator = Paginator(blogs, 10)
     # 从前端获取当前的页码数,默认为1
@@ -72,11 +72,8 @@ def edit_blog(request):
     if not request.user.is_authenticated:
         return redirect('/login/')
     if request.GET:
-        print '=======get requests======='
         blog_id = request.GET.get('id', 0)
-        print '===this blog id is ====', blog_id
         if blog_id == 0:
-            print '=======no get blog id ========= ', blog_id
             return render(request, 'error.html')
         # 当博客被删除后，再点击编辑时，能获取到id值，但是再数据库查询时，就没有了
         try:
@@ -169,7 +166,7 @@ def marks(request, name, tags):
     if not request.user.is_authenticated:
         return redirect('/login/')
     # name = request.user
-    blogs = Blogs.objects.filter(uname=name, marks_id=tags).order_by('-ctime')
+    blogs = Blogs.objects.filter(uname=name, marks_id=tags).order_by('-tops','-ctime')
     # 生成paginator对象,定义每页显示10条记录
     paginator = Paginator(blogs, 10)
     # 从前端获取当前的页码数,默认为1

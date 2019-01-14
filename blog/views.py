@@ -11,7 +11,7 @@ def index(request):
     old_url = request.get_full_path()
     # arg_urls = request.get_full_path()
     print "===index=get_full_path===", old_url
-    blogs = models.Blogs.objects.all().order_by('-tops','-ctime')  # [0:10]
+    blogs = models.Blogs.objects.all().order_by('-tops', '-ctime')  # [0:10]
     # print blogs
     # 生成paginator对象,定义每页显示10条记录
     paginator = Paginator(blogs, 10)
@@ -39,7 +39,7 @@ def search(request):
     print (arg_urls)
 
     # 增加翻页
-    blogs = models.Blogs.objects.filter(title__contains=title).order_by('-ctime')
+    blogs = models.Blogs.objects.filter(title__contains=title).order_by('-tops', '-ctime')
 
     # 生成paginator对象,定义每页显示10条记录
     paginator = Paginator(blogs, 10)
@@ -94,8 +94,8 @@ def blog_page(request, blog_id):
         # 这个只能用重定向，不然刷新页面还会提交
         print 'pinglun===url=>>>>', request.path
         # return redirect(request.path)
-        return redirect('/blog/%s' % blog_id)
-        # return redirect('/blog/')
+        return redirect('blog:blog_page', blog_id)
+        # return redirect('/blog/%s' % blog_id)
 
     # 评论显示,按博客的id查询
     comm = models.Comments.objects.filter(cbid=blog_id).order_by('-ctime')
@@ -170,7 +170,7 @@ def compage(request, blog_id):
 
 # 按标签
 def marks(request, tags):
-    blogs = models.Blogs.objects.filter(marks_id=tags).order_by('-ctime')
+    blogs = models.Blogs.objects.filter(marks_id=tags).order_by('-tops', '-ctime')
     # 生成paginator对象,定义每页显示10条记录
     paginator = Paginator(blogs, 10)
     # 从前端获取当前的页码数,默认为1

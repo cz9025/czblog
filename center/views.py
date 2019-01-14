@@ -33,17 +33,19 @@ def usercenter(request, name):
         # 头像
         # user.head_img=request.POST.get('head_img')
         user.save()
+        # 修改资料后重定向，不然再次刷新会提示重新提交
+        return redirect("center:usercenter",user.username)
 
     # 查询出该用户的博客
-    blogs = Blogs.objects.filter(uname=name).order_by('-utime')
+    blogs = Blogs.objects.filter(uname=name).order_by('-tops','-utime')
 
     # 该用户博客标签
     mark = {}
     for mk in blogs:
         if not mark.has_key(mk.marks_id):
-            k = Blogs.objects.filter(uname=name, marks=mk.marks_id)
+            k = Blogs.objects.filter(uname=name, marks=mk.marks_id).count()
 
-            mark[mk.marks_id] = len(k)
+            mark[mk.marks_id] = k
             # print "biaoqian=======", mk.marks_id, len(k), mark
 
     print "mark===", mark
@@ -54,7 +56,7 @@ def usercenter(request, name):
 # 登录
 def uselogin(request):
     # if request.method == 'GET':
-    #     # 记住来源的url,如果没有则设置为首页('/blog')
+    # #     记住来源的url,如果没有则设置为首页('/blog')
     #     request.session['login_from'] = request.META.get('HTTP_REFERER', '/blog')
     #     print "===进入登录===",request.session['login_from']
     if request.POST:
@@ -62,6 +64,7 @@ def uselogin(request):
         password = request.POST.get('password')
         # 输入正确的账号，返回用户名，否则返回none
         user = authenticate(username=username, password=password)
+        # print "laiyuan=>>>>",request.META.get('HTTP_REFERER', '/blog')
         if user:
             print ("===登录用户名===", user)
             login(request, user)

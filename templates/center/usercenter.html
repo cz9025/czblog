@@ -112,7 +112,11 @@
 
                 {% else %}
                     {% for blog in blogs %}
-                        <li><h4><a class="oneline" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h4>
+                        <li><h4>
+                            {% if blog.tops %}
+                                <span></span>
+                            {% endif %}
+                            <a class="oneline" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h4>
                             <p class="blog-content">{{ blog.content }}</p>
 
                             <span class="time"> {{ blog.utime|date:"Y-m-d H:i:s" }}</span> &nbsp;&nbsp;

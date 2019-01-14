@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
     <style>
-     .myblog {
+        .myblog {
             background-color: #e7e7e7;
         }
     </style>
@@ -32,7 +32,11 @@
             {% for blog in blogs %}
 
                 <li>
-                    <h2><a target="_blank" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
+                    <h2>
+                        {% if blog.tops %}
+                            <span></span>
+                        {% endif %}
+                        <a target="_blank" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
                     <div class="oneline summary">
                         {{ blog.content }}
                     </div>
