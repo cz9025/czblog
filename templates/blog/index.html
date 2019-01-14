@@ -36,6 +36,9 @@
 
                     <li>
                         <h2>
+                            {% if blog.tops %}
+                                <span></span>
+                            {% endif %}
                             <a target="_blank" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
                         <div class="oneline">
                             <a href="{% url 'blog:blog_page' blog.id %}" style="font-size: 14px;" class="summary">

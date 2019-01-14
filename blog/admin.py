@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib import admin
-from .models import Blogs, Bmarks, Comments, Likes
+from .models import Blogs, Bmarks, Comments, Likes, User
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('id', 'username', 'nick_name', 'birthday', 'gender', 'mobile', 'email', 'address', 'last_login')
+    search_fields = ('username',)
 
 
 @admin.register(Blogs)
 class BlogsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'rcount', 'coms', 'like', 'uname', 'marks', 'ctime')
+    list_display = ('id', 'title', 'tops', 'rcount', 'coms', 'like', 'uname', 'marks', 'ctime')
     search_fields = ('title',)
     date_hierarchy = 'ctime'
     # ordering = ('ctime',)

@@ -11,7 +11,7 @@ def index(request):
     old_url = request.get_full_path()
     # arg_urls = request.get_full_path()
     print "===index=get_full_path===", old_url
-    blogs = models.Blogs.objects.all().order_by('-ctime')  # [0:10]
+    blogs = models.Blogs.objects.all().order_by('-tops','-ctime')  # [0:10]
     # print blogs
     # 生成paginator对象,定义每页显示10条记录
     paginator = Paginator(blogs, 10)
@@ -87,9 +87,8 @@ def blog_page(request, blog_id):
         uses = request.user
         models.Comments.objects.create(uses=uses, comms=comms, cbid=blog_id, cblog=blog.title)
         #
-        count = models.Comments.objects.filter(cbid=blog_id)
-        # print u"某个博客的评论数据===", len(count)
-        blog.coms = len(count)
+        # counts = models.Comments.objects.filter(cbid=blog_id).count()
+        blog.coms += 1
         blog.save()
         # print "=================提交评论成功================="
         # 这个只能用重定向，不然刷新页面还会提交
@@ -118,20 +117,19 @@ def ulike(request, blog_id):
         return redirect('/login/')
 
     name = request.user
-    islike = models.Likes.objects.filter(like_user=name, like_id=blog_id)
+    islike = models.Likes.objects.filter(like_user=name, like_id=blog_id).count()
     print ("dianzan::::::::", islike)
-    # 没有点赞时
-    if not islike:
+    # 该用户有点赞时
+    if islike:
+        return HttpResponse("2")
+    # 该用户没有点赞时
+    else:
         blike = models.Blogs.objects.get(id=blog_id)
         blike.like = blike.like + 1
-
         blike.save()
         # 保存谁点赞的
         models.Likes.objects.create(like_user=name, like_title=blike.title, like_id=blog_id)
-        print ("点赞成功:::::", blike.like)
         return HttpResponse("1")
-    else:
-        return HttpResponse("2")
 
 
 # 删除自己的评论   查询语句需再优化
@@ -141,9 +139,10 @@ def del_comms(request, blog_id):
     models.Comments.objects.filter(id=delId).delete()
     #
     blog = models.Blogs.objects.get(id=blog_id)
-    count = models.Comments.objects.filter(cbid=blog_id)
-    print ("某个博客的评论数据===", len(count))
-    blog.coms = len(count)
+    # counts = models.Comments.objects.filter(cbid=blog_id).count()
+    # print ("del_comms===", counts)
+    # 有删除评论的话，直接在博客表中的评论数减1就行了；不需要再去查评论表
+    blog.coms -= 1
     blog.save()
 
     return HttpResponse(1)

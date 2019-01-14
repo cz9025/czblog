@@ -56,7 +56,11 @@
                 {% for blog in blogs %}
 
                     <li id="blog{{ blog.id }}">
-                        <h2><a target="_blank" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
+                        <h2>
+                            {% if blog.tops %}
+                                <span></span>
+                            {% endif %}
+                            <a target="_blank" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
                         <div class="oneline">
                             <a href="{% url 'blog:blog_page' blog.id %}" class="summary">
                                 {{ blog.content }}
@@ -69,9 +73,10 @@
                                 <span class="little"></span>
                                 <a class="marks" href="{% url 'myblog:mdel' %}?id={{ blog.id }}" onclick="del()">删除</a>
                                 <span class="little"></span>
-                                <a class="time">{{ blog.utime |date:"Y年m月d日  H:i:s"}}</a>
+                                <a class="time">{{ blog.utime |date:"Y年m月d日  H:i:s" }}</a>
                                 <span class="little"></span>
-                                <a class="marks" href="{% url 'myblog:mark' blog.uname blog.marks %}">{{ blog.marks }}</a>
+                                <a class="marks"
+                                   href="{% url 'myblog:mark' blog.uname blog.marks %}">{{ blog.marks }}</a>
 
                             </div>
                             <div class="fr">
@@ -86,7 +91,7 @@
                     </li>
                 {% endfor %}
             </ul>
-{#            分页#}
+            {# 分页#}
             {% if arg_urls %}
                 {% include 'arg_page.html' %}
             {% else %}

@@ -12,9 +12,9 @@ class User(AbstractUser):
     # 生日的类型改为字符串的了
     birthday = models.CharField(max_length=20, null=True, blank=True, verbose_name='生日', default='2018-01-01')
     gender = models.CharField(max_length=6, choices=(('1', '男'), ('0', '女')), default='0', verbose_name='性别')
-    address = models.CharField(max_length=100, default='', verbose_name='地址')
+    address = models.CharField(max_length=100, null=True, blank=True, default='', verbose_name='地址')
     mobile = models.CharField(max_length=11, null=True, blank=True, verbose_name='手机号')
-    head_img = models.CharField(max_length=255, verbose_name='头像')
+    head_img = models.CharField(max_length=255, verbose_name='头像', null=True, blank=True)
 
     class Meta:
         db_table = 'user_info'
@@ -87,6 +87,8 @@ class Blogs(models.Model):
                               to_field='tags', default="未分类", verbose_name="分类")
     uname = models.ForeignKey(User, null=True, on_delete=models.SET_DEFAULT,
                               to_field='username', default='匿名', verbose_name="用户名")
+    # 是否置顶
+    tops = models.IntegerField(default=0, choices=((1, '是'), (0, '否')), verbose_name="置顶")
 
     def __str__(self):
         return self.title.encode('utf-8')

@@ -112,7 +112,7 @@ def index(request):
         p.submit(get_pyquery, "https://news.baidu.com/tech").add_done_callback(bd_net_news)
         # 百度财经新闻
         p.submit(get_pyquery, "https://news.baidu.com/finance").add_done_callback(bd_finance_news)
-
-    return render(request, 'news/news.html',
-                  {"banana": banana, "people": people, "baidu_hot": baidu_hot, "baidu_net": baidu_net,
-                   "baidu_finance": baidu_finance})
+        
+    # {"banana": banana, "people": people, "baidu_hot": baidu_hot, "baidu_net": baidu_net,
+    # "baidu_finance": baidu_finance}
+    return render(request, 'news/news.html', locals())

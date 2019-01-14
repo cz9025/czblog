@@ -19,7 +19,7 @@ def userblog(request):
     name = request.user
 
     # 增加翻页
-    blogs = Blogs.objects.filter(uname=name).order_by('-ctime')
+    blogs = Blogs.objects.filter(uname=name).order_by('-tops','-ctime')
 
     # 生成paginator对象,定义每页显示10条记录
     paginator = Paginator(blogs, 10)
@@ -132,7 +132,7 @@ def add_blog(request):
         #     return render(request, 'myblog/add_blog.html', {'message': '标题', 'marks': marks})
 
         # 如果博客存在，则判断
-        if Blogs.objects.filter(title=title):
+        if Blogs.objects.filter(title=title).count():
             marks = Bmarks.objects.all()
             message = '该标题已存在'
             return render(request, 'myblog/add_blog.html',
