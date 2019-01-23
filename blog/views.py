@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, HttpResponse
 from django.shortcuts import redirect
 import models
 
@@ -11,6 +11,10 @@ def index(request):
     old_url = request.get_full_path()
     # arg_urls = request.get_full_path()
     print "===index=get_full_path===", old_url
+    # s = request.build_absolute_uri()
+    # print "index=>s=>>>>>",s
+    index_urls = request.path
+    print "index=>>index_urls=>>>>",index_urls
     blogs = models.Blogs.objects.all().order_by('-tops', '-ctime')  # [0:10]
     # print blogs
     # 生成paginator对象,定义每页显示10条记录
@@ -34,9 +38,9 @@ def index(request):
 def search(request):
     title = request.GET.get('title')
     s = request.build_absolute_uri()
-    print (s)
+    print "s=>>>>>",s
     arg_urls = request.path[0:-1] + "?title=" + title
-    print (arg_urls)
+    print "arg_urls=>>>>",arg_urls
 
     # 增加翻页
     blogs = models.Blogs.objects.filter(title__contains=title).order_by('-tops', '-ctime')

@@ -18,6 +18,29 @@
                onkeyup="this.value=this.value.replace(/\D/g,'')"
                style="width: 80px; display: inline-block; text-align: center;">
         <a id="pageBtn" class="btn btn-default" href="" style="margin-left: 0;">GO</a>
+        <script>
+            $(document).ready(function () {
+
+                // 我的博客，分页
+                $('#pageBtn').click(function () {
+                    var nu = $("#gotoPage").val();
+                    {#alert('{{ arg_urls }}');#}
+                    if (nu < 1) {
+                        nu = 1
+                    }
+                    {#这里判断一下，有无title的情况下#}
+
+                    {#设置或获取 href 属性中跟在问号后面的部分#}
+                    if ('{{ index_urls }}'.indexOf("title") === -1) {
+                        {#没有title查询#}
+                        $(this).attr('href', '{{ index_urls }}?page=' + nu);
+                    } else {
+                        {#有title时#}
+                        $(this).attr('href', '{{ index_urls }}&page=' + nu);
+                    }
+                });
+            });
+        </script>
 
     </li>
     {# 下一页按钮开始#}

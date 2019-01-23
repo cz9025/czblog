@@ -18,17 +18,18 @@ def index(request):
     baidu_hot = []
     baidu_finance = []
 
-    def get_pyquery(url):
+    def get_pyquery(url, encode='UTF-8'):
         u"""通用请求"""
         response = requests.get(url, headers=headers)
+        response.encoding = encode
         if response.status_code == 200:
-            pq = PyQuery(response.content)
+            pq = PyQuery(response.text)
             return pq
         else:
             return 0
 
     def hq_banana(res):
-        """banana图"""
+        """环球 banana图"""
         pq = res.result()
         div = pq("#foucsBox ul.imgCon")
         li = div.find("li")
@@ -52,9 +53,9 @@ def index(request):
         for news in hdnews.items():
             a = news.find("strong a")
             if a:
-                a_title = a.text()
+                a_title = a.html()
                 a_href = "http://house.people.com.cn" + a.attr("href")
-                gray = news.find("p a").text()
+                gray = news.find("p a").html()
                 mydata = {
                     "a_title": a_title,
                     "a_href": a_href,
@@ -102,17 +103,17 @@ def index(request):
             baidu_finance.append(mydata)
 
     with ThreadPoolExecutor(10) as p:
+        # 编码为UTF-8的可以不写，其余都要写下
+
         # 轮播图
         p.submit(get_pyquery, "http://world.huanqiu.com").add_done_callback(hq_banana)
         # 人民网  房产
-        p.submit(get_pyquery, "http://house.people.com.cn").add_done_callback(hx_money)
+        p.submit(get_pyquery, "http://house.people.com.cn", 'GB2312').add_done_callback(hx_money)
         # 百度热点要闻
         p.submit(get_pyquery, "https://news.baidu.com").add_done_callback(bd_hot_news)
         # 百度互联网新闻
         p.submit(get_pyquery, "https://news.baidu.com/tech").add_done_callback(bd_net_news)
         # 百度财经新闻
         p.submit(get_pyquery, "https://news.baidu.com/finance").add_done_callback(bd_finance_news)
-        
-    # {"banana": banana, "people": people, "baidu_hot": baidu_hot, "baidu_net": baidu_net,
-    # "baidu_finance": baidu_finance}
+
     return render(request, 'news/news.html', locals())
