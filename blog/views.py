@@ -6,8 +6,8 @@ from django.shortcuts import redirect
 import models
 
 
-# 首页
 def index(request):
+    """首页"""
     old_url = request.get_full_path()
     # arg_urls = request.get_full_path()
     print "===index=get_full_path===", old_url
@@ -34,8 +34,8 @@ def index(request):
     return render(request, 'blog/index.html', locals())
 
 
-# 主页搜索  增加翻页        搜索的结果翻页会报错
 def search(request):
+    """主页搜索  增加翻页"""
     title = request.GET.get('title')
     s = request.build_absolute_uri()
     print "s=>>>>>",s
@@ -62,13 +62,13 @@ def search(request):
     return render(request, 'blog/index.html', locals())
 
 
-# 错误页面
 def error(request):
+    """错误页面"""
     return render(request, 'error.html')
 
 
-# 博客详情页面
 def blog_page(request, blog_id):
+    """博客详情页面"""
     # return HttpResponse(6)
     if not request.user.is_authenticated:
         return redirect('/login/')
@@ -112,8 +112,8 @@ def blog_page(request, blog_id):
     return render(request, 'blog_page.html', {'blog': blog, 'comm': comm})
 
 
-# 点赞功能
 def ulike(request, blog_id):
+    """点赞"""
     # if request.GET:
     # 判断当前用户是否点赞
 
@@ -136,8 +136,8 @@ def ulike(request, blog_id):
         return HttpResponse("1")
 
 
-# 删除自己的评论   查询语句需再优化
 def del_comms(request, blog_id):
+    """删除自己的评论"""
     delId = request.GET.get("id")
     print ("delid===", delId)
     models.Comments.objects.filter(id=delId).delete()
@@ -152,8 +152,8 @@ def del_comms(request, blog_id):
     return HttpResponse(1)
 
 
-# 博客详情页面，评论翻页       没有做了
 def compage(request, blog_id):
+    """博客详情页面，评论翻页       还没有做"""
     cpage = models.Comments.objects.filter(cbid=blog_id).order_by('-ctime')
 
     # 生成paginator对象,定义每页显示10条记录
@@ -172,8 +172,8 @@ def compage(request, blog_id):
     return render(request, '/blog/%s' % blog_id, locals())
 
 
-# 按标签
 def marks(request, tags):
+    """按标签"""
     blogs = models.Blogs.objects.filter(marks_id=tags).order_by('-tops', '-ctime')
     # 生成paginator对象,定义每页显示10条记录
     paginator = Paginator(blogs, 10)

@@ -23,38 +23,34 @@
         </div>
 
         <span class="">个人分类：<a class="marks" href="{% url 'blog:marks' blog.marks %}">{{ blog.marks }}</a></span>
-        {# 需要加个判断，不能给自己的文章点赞#}
-        {% ifequal blog.uname_id request.user.username %}
-            <span class="pull-right text-primary">已{{ blog.like }}个赞啦 </span>
-        {% else %}
-            <a class="pull-right" id="likes" href="javascript:void(0);"> 点赞</a>
-            <span id="zan" class="pull-right">{{ blog.like }} </span>
 
-            <script>
-                $(function () {
-                    $('#likes').click(function () {
-                        $.ajax({
-                            type: "get",
-                            url: "{% url 'blog:ulike' blog.id %}",
+        <a class="pull-right" id="likes" href="javascript:void(0);"> 点赞</a>
+        <span id="zan" class="pull-right">{{ blog.like }} </span>
 
-                            async: true,
-                            success: function (data) {
-                                //1没有点赞，2点过赞
+        <script>
+            $(function () {
+                $('#likes').click(function () {
+                    $.ajax({
+                        type: "get",
+                        url: "{% url 'blog:ulike' blog.id %}",
 
-                                if (data.toString() == "1") {
-                                    $('#zan').text(parseInt({{ blog.like }}) + 1);
+                        async: true,
+                        success: function (data) {
+                            //1没有点赞，2点过赞
 
-                                }
-                                if (data == '2') {
-                                    {#$("#likes").attr("title","您已点过赞啦！");#}
-                                    alert("您已经点过赞了");
-                                }
+                            if (data.toString() === "1") {
+                                $('#zan').text(parseInt({{ blog.like }}) + 1);
+
                             }
-                        });
+                            if (data === '2') {
+                                {#$("#likes").attr("title","您已点过赞啦！");#}
+                                alert("您已经点过赞了");
+                            }
+                        }
                     });
                 });
-            </script>
-        {% endifequal %}
+            });
+        </script>
 
         <div class="row">
             <div class="col-md-10">

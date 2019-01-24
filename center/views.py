@@ -12,8 +12,8 @@ from blog.models import User
 from blog.models import Blogs
 
 
-# 查看资料  还没加分页功能
 def usercenter(request, name):
+    """查看资料"""
     print "usercenter start=====>>>>>>>>>>"
     if not request.user.is_authenticated:
         return redirect('/login/')
@@ -69,8 +69,8 @@ def usercenter(request, name):
     return render(request, 'center/usercenter.html', locals())
 
 
-# 登录
 def uselogin(request):
+    """登录"""
     # if request.method == 'GET':
     # #     记住来源的url,如果没有则设置为首页('/blog')
     #     request.session['login_from'] = request.META.get('HTTP_REFERER', '/blog')
@@ -93,8 +93,8 @@ def uselogin(request):
     return render(request, 'login.html', {'logs': ' '})
 
 
-# 修改密码
 def set_pwd(request):
+    """修改密码"""
     if not request.user.is_authenticated:
         return redirect('/login/')
     if request.method == "POST":
@@ -118,8 +118,8 @@ def set_pwd(request):
     return render(request, "set_pwd.html")
 
 
-# 注册
 def reg(request):
+    """注册"""
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -146,8 +146,8 @@ def reg(request):
     return render(request, "register.html")
 
 
-# 注销
 def log_out(request):
+    """注销"""
     if request.user.is_authenticated:
         logout(request)
     return redirect("/blog/")

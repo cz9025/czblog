@@ -11,6 +11,7 @@ from blog.models import Bmarks, Blogs, Comments
 
 
 def userblog(request):
+    """我的博客"""
     # return HttpResponse('userblog')
     # 如果没登录就需先登录
     if not request.user.is_authenticated:
@@ -38,8 +39,8 @@ def userblog(request):
     return render(request, 'myblog/userblog.html', locals())
 
 
-# 我的博客搜索
 def mysearch(request):
+    """我的博客搜索"""
     # return HttpResponse('mysearch')
     if not request.user.is_authenticated:
         return redirect('/login/')
@@ -66,8 +67,8 @@ def mysearch(request):
     return render(request, 'myblog/userblog.html', locals())
 
 
-# 编辑博客
 def edit_blog(request):
+    """编辑博客"""
     # return HttpResponse('edit_blog')
     if not request.user.is_authenticated:
         return redirect('/login/')
@@ -113,8 +114,8 @@ def edit_blog(request):
         return redirect('/myblog/')
 
 
-# 增加博客
 def add_blog(request):
+    """增加博客"""
     if not request.user.is_authenticated:
         return redirect('/login/')
     name = request.user
