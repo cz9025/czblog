@@ -98,11 +98,10 @@
                     <li class="mk"><a href="{% url 'myblog:mark' user.username key %}">{{ key }}({{ v }})</a></li>
                 {% endfor %}
             {% endif %}
-
         </ul>
-        <div class="blog">
+        <div class="blog-box">
             <h4 class="tag">发布的博客：</h4>
-            <ul>
+            <ul class="blogs">
                 {% if not blogs %}
                     {% ifequal user.username request.user.username %}
                         <p>没发表过博客？<a href="{% url 'myblog:mdeditor' %}">快来写写</a></p>
@@ -126,9 +125,54 @@
                     {% endfor %}
                 {% endif %}
             </ul>
+            {#分页#}
+            <ul class="pagination page-center" id="pager">
+                <li class="previous"><a href="?page=1">首页</a></li>
+                {#上一页按钮开始#}
+                {# 如果当前页有上一页#}
+                {% if blogs.has_previous %}
+                    {#  当前页的上一页按钮正常使用#}
+                    <li class="previous"><a href="?page={{ blogs.previous_page_number }}">上一页</a></li>
+                {% else %}
+                    {# 当前页的不存在上一页时,上一页的按钮不可用#}
+                    <li class="previous disabled"><a href="javascript:void(0);">上一页</a></li>
+                {% endif %}
+                {#上一页按钮结束#}
+                <li>
+                    <input type="text" id="gotoPage" class="form-control pull-left" placeholder="{{ currentPage }}"
+                           onkeyup="this.value=this.value.replace(/\D/g,'')"
+                           style="width: 80px; display: inline-block; text-align: center;">
+                    <a id="pageBtn" class="btn btn-default" href="javascript:void(0);" style="margin-left: 0;">GO</a>
+                    <script>
+                        $(document).ready(function () {
+                            {#搜索的#}
+                            // 我的博客，分页
+                            $('#pageBtn').click(function () {
+                                var nu = $("#gotoPage").val();
+                                {#alert('{{ arg_urls }}');#}
+                                if (nu < 1) {
+                                    nu = 1
+                                }
+                                if (nu >{{ paginator.num_pages }}) {
+                                    nu = '{{ paginator.num_pages }}';
+                                }
+                                $(this).attr('href', '?page=' + nu);
+                            });
+                        });
+                    </script>
+                </li>
+                {# 下一页按钮开始#}
+                {% if blogs.has_next %}
+                    <li class="next"><a href="?page={{ blogs.next_page_number }}">下一页</a></li>
+                {% else %}
+                    <li class="next disabled"><a href="javascript:void(0);">下一页</a></li>
+                {% endif %}
+                {# 下一页按钮结束#}
+                <li class="previous"><a href="?page={{ paginator.num_pages }}">尾页</a></li>
+                <li class="counts"> 共{{ paginator.num_pages }}页，当前第{{ currentPage }}页</li>
+
+            </ul>
         </div>
-
-
     </div>
 
 {% endblock %}

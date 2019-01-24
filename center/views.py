@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 # from django.contrib.auth.models import User
-from django.shortcuts import render, HttpResponseRedirect, redirect, HttpResponse
-from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 # 改版后使用修改过的用户表，如果用自带的，记得注释这里
 from blog.models import User
@@ -36,10 +36,27 @@ def usercenter(request, name):
         # 修改资料后重定向，不然再次刷新会提示重新提交
         return redirect("center:usercenter",user.username)
 
-    # 查询出该用户的博客
-    blogs = Blogs.objects.filter(uname=name).order_by('-tops','-utime')
+    # arg_urls = request.path
+    # print "arg_urls=>>>>", arg_urls
 
-    # 该用户博客标签
+    # 增加翻页
+    # 查询出该用户的博客
+    blogs = Blogs.objects.filter(uname=name).order_by('-tops', '-ctime')
+    # 生成paginator对象,定义每页显示10条记录
+    paginator = Paginator(blogs, 10)
+    # 从前端获取当前的页码数,默认为1
+    page = request.GET.get('page', 1)
+    # 把当前的页码数转换成整数类型
+    currentPage = int(page)
+
+    try:
+        blogs = paginator.page(currentPage)  # 获取当前页码的记录
+    except PageNotAnInteger:
+        blogs = paginator.page(1)  # 如果用户输入的页码不是整数时,显示第1页的内容
+    except EmptyPage:
+        blogs = paginator.page(paginator.num_pages)  # 如果用户输入的页数不在系统的页码列表中时,显示最后一页的内容
+
+        # 该用户博客标签
     mark = {}
     for mk in blogs:
         if not mark.has_key(mk.marks_id):
@@ -48,9 +65,8 @@ def usercenter(request, name):
             mark[mk.marks_id] = k
             # print "biaoqian=======", mk.marks_id, len(k), mark
 
-    print "mark===", mark
     print "<<<<<<<<<<=====usercenter end"
-    return render(request, 'center/usercenter.html', {'blogs': blogs, 'user': user, 'mark': mark})
+    return render(request, 'center/usercenter.html', locals())
 
 
 # 登录

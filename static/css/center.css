@@ -23,7 +23,7 @@ ul {
     line-height: 60px;
 }
 
-.blog li {
+.blog-box ul.blogs li {
     width: 100%;
     /*height: 60px;*/
     overflow: hidden;
@@ -48,7 +48,7 @@ a:hover {
 }
 
 /*鼠标移动标题时变红*/
-.blog ul li a:hover {
+.blog-box ul.blogs li a:hover {
     color: #a51e1e;
 }
 
@@ -73,7 +73,7 @@ a:hover {
 }
 
 /*博客*/
-.blog ul li h4 a {
+.blog-box ul.blogs li h4 a {
     text-decoration: none;
     color: #3d3d3d;
     display: inline-block;
@@ -84,11 +84,11 @@ a:hover {
     font-weight: bold;
 }
 
-.blog ul span {
+.blog-box ul span {
     color: #6b6b6b;
 }
 
-.blog .blog-content {
+.blog-box .blog-content {
 
     width: 100%;
     word-break: break-all;
@@ -172,11 +172,15 @@ a:hover {
     font-weight: normal;
 }
 
-.blog>ul>li>h4>span {
+.blog-box>ul.blogs>li>h4>span {
     float: left;
     width: 31px;
     height: 17px;
     background-position: -172px -108px;
     background-image: url(../img/thread_item.png);
     margin: 3px 10px 0 0;
+}
+
+.page-center{
+ margin-left: 100px;
 }
