@@ -2,7 +2,7 @@
 """czblog URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.11/topics/http/urls/
+    https://docs.djangoproject.com/en/1.9/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -11,29 +11,18 @@ Class-based views
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
 Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+    1. Add an import:  from blog import urls as blog_urls
+    2. Import the include() function: from django.conf.urls import url, include
+    3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.contrib import admin
-
-# from blog import views
 from center import views as center_view
-
+import xadmin
+from django.conf.urls import url, include
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-
-    # 搜索我的博客
-    # url(r'^myblog/mysearch/', views.mysearch, name='mysearch'),
-
-    # 编辑博客==添加   修改
-    # url(r'^edit_blog/(?P<blog_id>\d+)$', views.edit_blog, name='edit_blog'),
-    # 删除博客
-    # url(r'^del_blog/(?P<blog_id>\d+)$', views.del_blog, name='del_blog'),
-
-    # 按类别分类显示
-    # url(r'^marks/(?P<tags>.*?)$', views.marks, name='marks'),
-
+    # url(r'^admin/', admin.site.urls),
+    url(r'^xadmin/', xadmin.site.urls),
     # 登录
     url(r'^login', center_view.uselogin, name='uselogin'),
     # 注册
@@ -66,6 +55,4 @@ urlpatterns = [
 
     # CSDN内容
     url(r'^csdn/', include('csdn.csdn_urls', namespace='csdn')),
-
-
 ]

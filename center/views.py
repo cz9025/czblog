@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 # 改版后使用修改过的用户表，如果用自带的，记得注释这里
-from blog.models import User
+from .models import UserInfo
 
 # 自己的资料
 from blog.models import Blogs
@@ -18,7 +18,7 @@ def usercenter(request, name):
     if not request.user.is_authenticated:
         return redirect('/login/')
     # 查用户的信息,需要把用户的信息带过去
-    user = User.objects.get(username=name)
+    user = UserInfo.objects.get(username=name)
     print type(user.birthday)
     print type(user.last_login)
 
@@ -106,7 +106,7 @@ def set_pwd(request):
             return render(request, "set_pwd.html", {"logs": info})
         # 得到当前登录的用户，判断旧密码是不是和当前的密码一样
         username = request.user  # 打印的是当前登录的用户名
-        user = User.objects.get(username=username)  # 查看用户
+        user = UserInfo.objects.get(username=username)  # 查看用户
         ret = user.check_password(oldpwd)  # 检查密码是否正确
         if ret:
             user.set_password(newpwd1)  # 如果正确就给设置一个新密码
@@ -129,14 +129,14 @@ def reg(request):
         # last_name = request.POST.get("last_name")
         # if password1 != password2:
         #     return render(request, "blog/register.html", {'logs': '两次密码出入不一致'})
-        name = User.objects.filter(username=username)
+        name = UserInfo.objects.filter(username=username)
         # 如果用户存在，则name=1,不存在则name=0
         if name:
             return render(request, "register.html", {'message': '用户已存在%s' % len(name)})
         # else:
         # return render(request, "regist.html", {'logs': '用户bu存在%s' % len(name)})
         # 得到用户输入的用户名和密码创建一个新用户
-        User.objects.create_user(username=username, password=password, email=email)
+        UserInfo.objects.create_user(username=username, password=password, email=email)
 
         # 注册成功后自动登录
         user = authenticate(username=username, password=password)

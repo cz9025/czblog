@@ -1,55 +1,13 @@
-# -*- coding: utf-8 -*-
+# coding:utf-8
 from __future__ import unicode_literals
-from django.db import models
+
+from datetime import datetime
 # from django.contrib.auth.models import User
+from django.db import models
 
 from django.contrib.auth.models import AbstractUser
 
-
-# 这个是在自带的认证表上添加字段
-class User(AbstractUser):
-    nick_name = models.CharField(max_length=50, verbose_name='昵称', default='匿名')
-    # 生日的类型改为字符串的了
-    birthday = models.CharField(max_length=20, null=True, blank=True, verbose_name='生日', default='2018-01-01')
-    gender = models.CharField(max_length=6, choices=(('1', '男'), ('0', '女')), default='0', verbose_name='性别')
-    address = models.CharField(max_length=100, null=True, blank=True, default='', verbose_name='地址')
-    mobile = models.CharField(max_length=11, null=True, blank=True, verbose_name='手机号')
-    head_img = models.CharField(max_length=255, verbose_name='头像', null=True, blank=True)
-
-    class Meta:
-        db_table = 'user_info'
-        verbose_name = '用户信息'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.username
-
-
-#
-# class User(models.Model):
-#     gender = (
-#         ('male', "男"),
-#         ('female', "女"),
-#     )
-#     id = models.AutoField(max_length=10, primary_key=True)
-#     name = models.CharField(max_length=128, unique=True)
-#     password = models.CharField(max_length=256)
-#
-#     email = models.EmailField(unique=True)
-#     sex = models.CharField(max_length=32, choices=gender, default="男")
-#     c_time = models.DateTimeField(auto_now_add=True, null=False)
-#     u_time = models.DateTimeField(auto_now=True, null=False)  # 最后修改时间
-#
-#     def __str__(self):
-#         return self.name
-#
-#     class Meta:
-#         db_table = 'login_user'
-#         ordering = ["-c_time"]
-#         verbose_name = "用户"
-#         verbose_name_plural = "用户"
-#         unique_together = ('name',)
-
+from center.models import UserInfo
 
 # 分类表
 class Bmarks(models.Model):
@@ -65,8 +23,7 @@ class Bmarks(models.Model):
         verbose_name = "分类"
         verbose_name_plural = "分类"
 
-
-# 博客表
+# Create your models here.
 class Blogs(models.Model):
     id = models.AutoField(max_length=10, primary_key=True)
     title = models.CharField(max_length=128, unique=True, verbose_name="标题")
@@ -85,7 +42,7 @@ class Blogs(models.Model):
 
     marks = models.ForeignKey(Bmarks, null=True, on_delete=models.SET_DEFAULT, related_name='blog_marks',
                               to_field='tags', default="未分类", verbose_name="分类")
-    uname = models.ForeignKey(User, null=True, on_delete=models.SET_DEFAULT,
+    uname = models.ForeignKey(UserInfo, null=True, on_delete=models.SET_DEFAULT,
                               to_field='username', default='匿名', verbose_name="用户名")
     # 是否置顶
     tops = models.IntegerField(default=0, choices=((1, '是'), (0, '否')), verbose_name="置顶")
@@ -98,6 +55,10 @@ class Blogs(models.Model):
         unique_together = ('title',)
         verbose_name = "博客"
         verbose_name_plural = "博客"
+
+
+
+
 
 
 # 评论表
@@ -148,3 +109,5 @@ class Likes(models.Model):
         db_table = 'blog_like'
         verbose_name = "点赞"
         verbose_name_plural = "点赞"
+
+
