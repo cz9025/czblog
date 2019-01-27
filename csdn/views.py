@@ -36,9 +36,9 @@ def index(request):
         # 发布时间
         times = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/div/p[1]/span')
         # 阅读数
-        cous = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/div/p[2]/span')
+        cous = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/div/p[3]/span/span')
         # 评论数
-        comens = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/div/p[3]/span')
+        comens = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/div/p[3]/span/span')
         for i in range(len(article)):
             mycsdn = {}
             # 标题
@@ -56,9 +56,9 @@ def index(request):
             column_title.append(mycsdn)
         # print column_title
 
-    if request.POST:
+    if request.GET:
         # 获取点击的那个分类编号
-        dataurl = request.POST.get('dataurl')
+        dataurl = request.GET.get('dataurl')
         # 根据编号再次发起请求，获得分类下的内容
         p.submit(get_index, uri + str(dataurl)).add_done_callback(get_py)
 
