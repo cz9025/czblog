@@ -28,6 +28,7 @@ def index(request):
     def get_py(res):
         res = res.result()
         html = etree.HTML(res)
+        # print "html=>>>",html
         # 不包含特定元素的，这里排除为隐藏的元素；div的列表
         # 标题
         article = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/h4/a')
@@ -54,11 +55,12 @@ def index(request):
             # 评论数
             mycsdn["comens"] = comens[i].xpath('./text()')[0]
             column_title.append(mycsdn)
-        # print column_title
+        # print "column_title=>>>>>",column_title
 
     if request.GET:
         # 获取点击的那个分类编号
         dataurl = request.GET.get('dataurl')
+        # print "dataurl=>>>>",dataurl
         # 根据编号再次发起请求，获得分类下的内容
         p.submit(get_index, uri + str(dataurl)).add_done_callback(get_py)
 

@@ -6,6 +6,7 @@
 
 
 from .models import Blogs, Bmarks, Comments, Likes
+from center.adminx import UserInfo
 from xadmin import views
 import xadmin
 
@@ -46,8 +47,8 @@ xadmin.site.register(Likes, LikesAdmin)
 
 
 class BaseSetting(object):
-    enable_themes = True
-    use_bootswatch = True
+    enable_themes = True  # 开启主题使用
+    use_bootswatch = True  # 开启主题选择  没有发现主题列表
 
 
 xadmin.site.register(views.BaseAdminView, BaseSetting)
@@ -55,7 +56,20 @@ xadmin.site.register(views.BaseAdminView, BaseSetting)
 
 class GlobalSetting(object):
     site_title = "czblog后台管理"
-    site_footer = "cz9025的网站"
+    site_footer = "http://www.baidu.com"
+
+    # menu_style="accordion"  #修改菜单栏 改成收缩样式
+
+    # 设置models的全局图标
+    global_search_models = [Blogs, UserInfo]
+    global_models_icon = {
+        UserInfo: "glyphicon glyphicon-user",
+        Blogs: "glyphicon glyphicon-list-alt",
+        Bmarks: "glyphicon glyphicon-tag",
+        Likes: "glyphicon glyphicon-thumbs-up",
+        Comments: "glyphicon glyphicon-leaf",
+
+    }
 
 
 xadmin.site.register(views.CommAdminView, GlobalSetting)
