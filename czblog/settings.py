@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for czblog project.
 
@@ -23,6 +24,7 @@ SECRET_KEY = 'cfam^kgsdky$rs$is#s(5zklw1*7%b75#oslzjshlzz2$m@79z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -123,15 +125,25 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
+
+AUTH_USER_MODEL = 'center.UserInfo'
+
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-AUTH_USER_MODEL = 'center.UserInfo'
 
+# 放服务器上时，需打开
+STATIC_ROOT='/usr/local/src/webroot/blog/static/'
+
+# MEDIA_ROOT = '/usr/local/src/webroot/file/'
+
+# 放服务器上时，需关闭
+MEDIA_ROOT = 'E:\cz'
+# MEDIA_URL = 'media/'

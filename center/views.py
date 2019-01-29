@@ -6,8 +6,9 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 # 改版后使用修改过的用户表，如果用自带的，记得注释这里
+from czblog import settings
 from .models import UserInfo
-
+from django.core.files.base import ContentFile
 # 自己的资料
 from blog.models import Blogs
 
@@ -31,7 +32,16 @@ def usercenter(request, name):
         # 性别要处理
         user.gender = request.POST.get('gender', 0)
         # 头像
-        # user.head_img=request.POST.get('head_img')
+        head_img=request.FILES['heads']
+        user.head_img=request.POST.get('heads')
+        print 'user.head_img=>>>>',user.head_img
+        fname = '%s/%s' % (settings.MEDIA_ROOT, head_img.name)
+        print 'fname=>>>',fname
+        with open(fname, 'wb') as pic:
+            for c in head_img.chunks():
+                pic.write(c)
+
+
         user.save()
         # 修改资料后重定向，不然再次刷新会提示重新提交
         return redirect("center:usercenter",user.username)

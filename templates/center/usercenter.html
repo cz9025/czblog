@@ -19,7 +19,7 @@
             </div>
             {#  完善信息主体部分      #}
             <div class="info-con">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <ul class="ulist">
                         <li>
@@ -47,7 +47,7 @@
                                                                       value="{{ user.mobile }}">
                         </li>
                         <li>
-                            <span>头像</span>：&nbsp;&nbsp;&nbsp;<input name="head_img" type="file">
+                            <span>头像</span>：&nbsp;&nbsp;&nbsp;<input name="heads" type="file">
                         </li>
                         <li>
                             <input type="submit" class="info-sub btn btn-primary" value="提交">

@@ -1,4 +1,4 @@
-# coding:utf-8
+# -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
 from datetime import datetime
@@ -55,10 +55,6 @@ class Blogs(models.Model):
         unique_together = ('title',)
         verbose_name = "博客"
         verbose_name_plural = "博客"
-
-
-
-
 
 
 # 评论表
