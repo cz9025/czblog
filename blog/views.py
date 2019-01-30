@@ -4,13 +4,15 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, HttpResponse
 from django.shortcuts import redirect
 import models
+import logging
 
 
 def index(request):
     """首页"""
     old_url = request.get_full_path()
     # arg_urls = request.get_full_path()
-    print "===index=get_full_path===", old_url
+    # print "===index=get_full_path===", old_url
+    logging.log(logging.INFO,'old_url=>>>'+old_url)
     # s = request.build_absolute_uri()
     # print "index=>s=>>>>>",s
     index_urls = request.path

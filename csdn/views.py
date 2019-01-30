@@ -39,7 +39,7 @@ def index(request):
         # 阅读数
         cous = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/div/p[3]/span/span')
         # 评论数
-        comens = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/div/p[3]/span/span')
+        comens = html.xpath('//*[@id="mainBox"]/main/div[2]/div[not(@style="display: none;")]/div/p[5]/span/span')
         for i in range(len(article)):
             mycsdn = {}
             # 标题

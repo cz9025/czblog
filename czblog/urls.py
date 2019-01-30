@@ -18,6 +18,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from center import views as center_view
+from blog import views as indexblog
 import xadmin
 from django.conf.urls import url, include
 urlpatterns = [
@@ -31,6 +32,9 @@ urlpatterns = [
     url(r'^logout', center_view.log_out, name='log_out'),
     # 修改密码
     url(r'^setpwd', center_view.set_pwd, name='set_pwd'),
+
+    # 首页 只输入ip就能访问
+    url(r'^$', indexblog.index, name='indexblog'),
 
     # 个人资料相关
     url(r'^account/', include('center.center_urls', namespace='center')),

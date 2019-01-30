@@ -96,7 +96,7 @@ def uselogin(request):
             login(request, user)
             # 重定向到来源的url
             # return HttpResponseRedirect(request.session['login_from'])
-            return redirect('/blog/')
+            return redirect('/')
         else:
             return render(request, 'login.html', {'logs': '账号或密码错误！%s' % user})
 
@@ -152,7 +152,7 @@ def reg(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            return redirect("/blog/")
+            return redirect("/")
     return render(request, "register.html")
 
 
@@ -160,4 +160,4 @@ def log_out(request):
     """注销"""
     if request.user.is_authenticated:
         logout(request)
-    return redirect("/blog/")
+    return redirect("/")

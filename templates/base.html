@@ -8,11 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>{% block title %}cz9025的网站{% endblock %}</title>
-
-    <!-- Bootstrap -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-	
+    <!-- {#图标#} -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <style type="text/css">
@@ -20,8 +19,6 @@
 
         }
     </style>
-
-    {#    <script type="text/javascript" src="{% static 'public/bootstrap.js' %}"></script>#}
     {% block css %}{% endblock %}
 
 </head>
@@ -36,12 +33,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/blog">cz9025的网站</a>
+            <a class="navbar-brand" href="/">cz9025的网站</a>
         </div>
 
         <div class="collapse navbar-collapse" id="my-nav">
             <ul class="nav navbar-nav" id="navs">
-                <li><a href="{% url 'blog:index' %}" class="index">主页</a></li>
+                <li><a href="{% url 'indexblog' %}" class="index">主页</a></li>
                 <li><a href="{% url 'csdn:index' %}" class="csdn">CSDN</a></li>
 
                 <li><a href="{% url 'news:index' %}" class="news">新闻大事件</a></li>

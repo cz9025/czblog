@@ -23,7 +23,7 @@ class Bmarks(models.Model):
         verbose_name = "分类"
         verbose_name_plural = "分类"
 
-# Create your models here.
+
 class Blogs(models.Model):
     id = models.AutoField(max_length=10, primary_key=True)
     title = models.CharField(max_length=128, unique=True, verbose_name="标题")
@@ -68,8 +68,8 @@ class Comments(models.Model):
     comms = models.TextField(max_length=300, verbose_name="评论内容")
     # 评论人  直接在views中获取当前登录的用户，保存起来
     uses = models.CharField(max_length=128, blank=False, default='匿名', verbose_name="评论人")
-    # 创建时间
-    ctime = models.DateTimeField(max_length=30, auto_now_add=True, null=True, verbose_name="创建时间")
+    # 评论时间
+    ctime = models.DateTimeField(max_length=30, auto_now_add=True, null=True, verbose_name="评论时间")
 
     # 博客删除后，评论跟着删除
     # cblog = models.ForeignKey(Blogs, null=True, on_delete=models.SET_DEFAULT, related_name='user_blogs',
