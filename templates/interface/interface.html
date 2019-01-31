@@ -39,20 +39,45 @@
     <div class="container">
         <ul class="forms form-group col-lg-10 col-md-10 col-sm-10">
             <li>
-                <label for="urls">URL：要加上路径/a/b </label>
-                <input type="text" class="form-control" id="urls" placeholder="url"
-                       value="http://t.weather.sojson.com/api/weather/city/101030100">
+                <div class="form-group">
+                    <label>URL：请求的地址</label>
+                    <input type="text" class="form-control" placeholder="url" id="urls"
+                           value="http://t.weather.sojson.com/api/weather/city/101030100">
+                </div>
+            </li>
+
+            <li>
+                <div class="form-group">
+                    <label>Content-Type：默认为'text/html'</label>
+                    <input type="text" class="form-control" placeholder="Content-Type" id="content_type">
+                </div>
             </li>
             <li>
-                <label for="header">Header：默认{'Content-Type': 'text/html'}</label>
-                <input type="text" class="form-control" id="header" placeholder="header">
+                <div class="form-group">
+                    <label>User-Agent：默认为空</label>
+                    <input type="text" class="form-control" placeholder="User-Agent" id="user_agent">
+                </div>
             </li>
             <li>
+
+                <div class="form-group">
+                    <label>请求方式：</label>
+{#                    <input type="text" class="form-control" placeholder="默认GET请求" id="mode">#}
+                    <select id="mode">
+                        <option value="1">GET</option>
+                        <option value="2">POST</option>
+                    </select>
+                </div>
+
+            </li>
+
+            <li>
+                <label>请求参数：</label>
                 <div class="form-inline" id="datas">
                     <div class="form-group kv">
-                        <label>K：</label>
+                        <label>Key：</label>
                         <input type="text" class="form-control keys" placeholder="k">
-                        <label>&nbsp; V：</label>
+                        <label>&nbsp; Value：</label>
                         <input type="text" class="form-control vals" placeholder="v">
                     </div>
                     <input type="button" class=" btn btn-primary" id="add-data" value="+">
@@ -136,14 +161,16 @@
                         data: {
                             urls: $('#urls').val(),
                             datas: strs,
-                            headers: $("#header").val(),
+                            content_type: $("#content_type").val(),
+                            user_agent: $("#user_agent").val(),
+                            mode:$("#mode").val(),
 
                         },
                         async: true,
                         dataType: "json",
                         success: function (data) {
                             {#alert(typeof data);#}
-                            re = new RegExp(",","g");
+                            re = new RegExp(",", "g");
 
                             var Newstr = syntaxHighlight(data.data).replace(re, ",<br/>");
 
@@ -155,7 +182,7 @@
 
 
                         }, error: function (data) {
-                            alert(data);
+                            alert(data.data);
                         }
                     });
                 }

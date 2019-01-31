@@ -27,24 +27,26 @@ def usercenter(request, name):
     if request.POST:
         user.nick_name = request.POST.get('nick', '匿名')
         user.birthday = request.POST.get('birthday', '2018-01-01')
-        user.address = request.POST.get('address')
-        user.mobile = request.POST.get('mobile')
+        user.address = request.POST.get('address', '')
+        user.mobile = request.POST.get('mobile', '')
         # 性别要处理
         user.gender = request.POST.get('gender', 0)
         # 头像
-        head_img=request.FILES['heads']
-        user.head_img=request.POST.get('heads')
-        print 'user.head_img=>>>>',user.head_img
-        fname = '%s/%s' % (settings.MEDIA_ROOT, head_img.name)
-        print 'fname=>>>',fname
-        with open(fname, 'wb') as pic:
-            for c in head_img.chunks():
-                pic.write(c)
-
+        try:
+            head_img = request.FILES['heads']
+            user.head_img = request.POST.get('heads')
+            print 'user.head_img=>>>>', user.head_img
+            fname = '%s/%s' % (settings.MEDIA_ROOT, head_img.name)
+            print 'fname=>>>', fname
+            with open(fname, 'wb') as pic:
+                for c in head_img.chunks():
+                    pic.write(c)
+        except:
+            print u'没有上传头像'
 
         user.save()
         # 修改资料后重定向，不然再次刷新会提示重新提交
-        return redirect("center:usercenter",user.username)
+        return redirect("center:usercenter", user.username)
 
     # arg_urls = request.path
     # print "arg_urls=>>>>", arg_urls
