@@ -21,6 +21,8 @@ from center import views as center_view
 from blog import views as indexblog
 import xadmin
 from django.conf.urls import url, include
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
     url(r'^xadmin/', xadmin.site.urls),
@@ -59,4 +61,5 @@ urlpatterns = [
 
     # CSDN内容
     url(r'^csdn/', include('csdn.csdn_urls', namespace='csdn')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

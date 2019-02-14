@@ -47,7 +47,7 @@
                                                                       value="{{ user.mobile }}">
                         </li>
                         <li>
-                            <span>头像</span>：&nbsp;&nbsp;&nbsp;<input name="heads" type="file"><img src="{{ user.head_img }}">
+                            <span>头像</span>：&nbsp;&nbsp;&nbsp;<img style="width: 64px;height: 64px;" src="{{ MEDIA_URL }}{{ user.head_img }}"><input name="heads" type="file" >
                         </li>
                         <li>
                             <input type="submit" class="info-sub btn btn-primary" value="提交">

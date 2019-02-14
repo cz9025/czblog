@@ -40,13 +40,14 @@ def usercenter(request, name):
 
             print 'user.head_img=>>>>', head_img
             # 上传后的文件名就是自己的用户名
+            user.head_img = user.username + '.png'
             # ran_str = ''.join(random.sample(string.ascii_letters + string.digits, 12))
-            fname = '%s/%s' % (settings.MEDIA_ROOT, user.username+'.png')
+            fname = '%s/%s' % (settings.MEDIA_ROOT, user.head_img)
             print 'fname=>>>', fname
             with open(fname, 'wb') as pic:
                 for c in head_img.chunks():
                     pic.write(c)
-            user.head_img = fname
+
         except:
             print u'没有上传头像'
 
