@@ -2,6 +2,9 @@
 from __future__ import unicode_literals
 
 # from django.contrib.auth.models import User
+import random
+import string
+
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
@@ -34,13 +37,16 @@ def usercenter(request, name):
         # 头像
         try:
             head_img = request.FILES['heads']
-            user.head_img = request.POST.get('heads')
-            print 'user.head_img=>>>>', user.head_img
-            fname = '%s/%s' % (settings.MEDIA_ROOT, head_img.name)
+
+            print 'user.head_img=>>>>', head_img
+            # 上传后的文件名就是自己的用户名
+            # ran_str = ''.join(random.sample(string.ascii_letters + string.digits, 12))
+            fname = '%s/%s' % (settings.MEDIA_ROOT, user.username+'.png')
             print 'fname=>>>', fname
             with open(fname, 'wb') as pic:
                 for c in head_img.chunks():
                     pic.write(c)
+            user.head_img = fname
         except:
             print u'没有上传头像'
 
