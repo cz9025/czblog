@@ -21,6 +21,7 @@ def index(request):
     def get_pyquery(url, encode='UTF-8'):
         u"""通用请求"""
         response = requests.get(url, headers=headers)
+        # print 'response=>>>>',response.content
         response.encoding = encode
         if response.status_code == 200:
             pq = PyQuery(response.text)
@@ -49,7 +50,9 @@ def index(request):
     def hx_money(res):
         """人民网"""
         pq = res.result()
+        print "pq=>>>>>",pq
         hdnews = pq('.headingNews_box .headingNews:first').find(".hdNews")
+        print "hdnews=>>>>",hdnews
         for news in hdnews.items():
             a = news.find("strong a")
             if a:
