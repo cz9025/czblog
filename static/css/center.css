@@ -130,6 +130,7 @@ a:hover {
     right: 0;
     bottom: 0;
     border: 3px #40adde solid;
+    z-index:9999;
 }
 
 .other-info .top-close {
