@@ -121,7 +121,7 @@ a:hover {
 .other-info {
     position: absolute;
     margin: auto;
-    width: 600px;
+    width: 500px;
     height: 400px;
     background-color: #40adde;
     display: none;
@@ -156,7 +156,13 @@ a:hover {
     list-style: none;
     padding: 10px;
 }
-
+.ulist li:last-child{
+    text-align: center;
+}
+.ulist li:last-child input{
+    margin-right: 30px;
+    margin-top: 25px;
+}
 .info-con .ulist li {
     line-height: 25px;
     margin: 10px;
@@ -172,7 +178,7 @@ a:hover {
     font-weight: normal;
 }
 
-.blog-box>ul.blogs>li>h4>span {
+.blog-box > ul.blogs > li > h4 > span {
     float: left;
     width: 31px;
     height: 17px;
@@ -181,6 +187,16 @@ a:hover {
     margin: 3px 10px 0 0;
 }
 
-.page-center{
- margin-left: 100px;
+.page-center {
+    margin-left: 100px;
+}
+
+/*详细资料*/
+input[type="file"] {
+    display: inline-block;
+}
+
+.tou {
+    width: 64px;
+    height: 64px;
 }

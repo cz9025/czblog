@@ -25,7 +25,6 @@ urlpatterns = [
     url(r'^error', views.error, name='error'),
 
 
-
     # 点赞   这个匹配会被上面的吸收，导致不起作用
     url(r'^page/(?P<blog_id>\d+)$', views.ulike, name='ulike'),
 

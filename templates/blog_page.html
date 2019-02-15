@@ -63,7 +63,8 @@
 
                         <li id="com-{{ com.id }}" class="col-md-10">
                             <div class="top">
-                                <span class="tou"></span>
+
+                                <img id="tou" class="tou" src="{{ MEDIA_URL }}{{ com.uses }}.png">
                                 {#  {% url 'edit_blog' blog.id %}#}
                                 <span class="nick"><a
                                         href="{% url 'center:usercenter' com.uses %}">{{ com.uses }}</a></span>
@@ -90,6 +91,10 @@
         <script type="text/javascript">
             {#删除自己的评论#}
             $(function () {
+                {#如果用户没有上传图片，则显示默认的#}
+                $("#tou").on("error", function () {
+                    $(this).attr("src", "{{ MEDIA_URL }}default_head_pic.png");
+                });
                 deleteComments = function (id) {
                     $.ajax({
                         url: "{% url 'blog:delcomm' blog.id %}",

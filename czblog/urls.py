@@ -36,13 +36,13 @@ urlpatterns = [
     url(r'^setpwd', center_view.set_pwd, name='set_pwd'),
 
     # 首页 只输入ip就能访问
-    url(r'^$', indexblog.index, name='indexblog'),
+    # url(r'^$', indexblog.index, name='indexblog'),
 
     # 个人资料相关
     url(r'^account/', include('center.center_urls', namespace='center')),
 
     # 首页博客
-    url(r'^blog/', include('blog.blog_urls', namespace='blog')),
+    url(r'^czblog/', include('blog.blog_urls', namespace='blog')),
 
     # 我的博客
     url(r'^', include('myblog.myblog_urls', namespace='myblog')),
