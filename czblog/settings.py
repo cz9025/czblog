@@ -145,7 +145,7 @@ STATICFILES_DIRS = [
 # MEDIA_ROOT = '/usr/local/src/webroot/media/'
 
 # windows上需关闭
-# STATIC_ROOT=os.path.join(BASE_DIR,'static')
+STATIC_ROOT=os.path.join(BASE_DIR,'static')
 
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
