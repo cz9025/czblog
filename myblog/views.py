@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
+import os
+
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.shortcuts import redirect
 from markdown import markdown
 
-
 # 我的博客
 from blog.models import Bmarks, Blogs, Comments
+from czblog import settings
 
 
 def userblog(request):
@@ -20,7 +24,7 @@ def userblog(request):
     name = request.user
 
     # 增加翻页
-    blogs = Blogs.objects.filter(uname=name).order_by('-tops','-ctime')
+    blogs = Blogs.objects.filter(uname=name).order_by('-tops', '-ctime')
 
     # 生成paginator对象,定义每页显示10条记录
     paginator = Paginator(blogs, 10)
@@ -49,7 +53,7 @@ def mysearch(request):
     arg_urls = request.path[0:-1] + "?title=" + title
     print (arg_urls)
     # 增加翻页
-    blogs = Blogs.objects.filter(uname=name, title__contains=title).order_by('-tops','-ctime')
+    blogs = Blogs.objects.filter(uname=name, title__contains=title).order_by('-tops', '-ctime')
     # 生成paginator对象,定义每页显示10条记录
     paginator = Paginator(blogs, 10)
     # 从前端获取当前的页码数,默认为1
@@ -91,6 +95,7 @@ def edit_blog(request):
         title = request.POST.get('title', 0)
         content = request.POST.get('content', 0)
         tags = request.POST.get('tags')
+        # print '===>>>>>>>', content
         # print '===>>>>>>>', markdown(content)
 
         # 如果博客存在，则判断
@@ -167,7 +172,7 @@ def marks(request, name, tags):
     if not request.user.is_authenticated:
         return redirect('/login/')
     # name = request.user
-    blogs = Blogs.objects.filter(uname=name, marks_id=tags).order_by('-tops','-ctime')
+    blogs = Blogs.objects.filter(uname=name, marks_id=tags).order_by('-tops', '-ctime')
     # 生成paginator对象,定义每页显示10条记录
     paginator = Paginator(blogs, 10)
     # 从前端获取当前的页码数,默认为1
@@ -183,3 +188,31 @@ def marks(request, name, tags):
         blogs = paginator.page(paginator.num_pages)  # 如果用户输入的页数不在系统的页码列表中时,显示最后一页的内容
 
     return render(request, 'myblog/marks.html', locals())
+
+
+def uploadImg(request):
+    if not request.user.is_authenticated:
+        return redirect('/login/')
+    name = request.user
+    img = request.FILES['editormd-image-file']
+    path='%s/article/%s' % (settings.MEDIA_ROOT,name)
+    isExists=os.path.exists( path)
+    print isExists
+    if not isExists:
+        os.makedirs(path)
+
+    print 'user.head_img=>>>>', img
+    # 上传文件
+    fname = '%s/%s' % (path, img)
+    print 'fname=>>>', fname
+    with open(fname, 'wb') as pic:
+        for c in img.chunks():
+            pic.write(c)
+
+    res = {
+        'success': 1,
+        'message': "上传成功！",
+        # 'url': fname,
+        'url': '/media/article/%s/%s' % (name,img),
+    }
+    return JsonResponse(res)

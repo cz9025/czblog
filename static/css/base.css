@@ -42,3 +42,7 @@ a:active {
     background-color: #fff;
 }
 
+pre {
+word-wrap: break-word;
+white-space: pre-wrap;
+}

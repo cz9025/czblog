@@ -42,7 +42,9 @@
                             <a target="_blank" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
                         <div class="oneline">
                             <a href="{% url 'blog:blog_page' blog.id %}" style="font-size: 14px;" class="summary">
+{#                                {% autoescape on %}#}
                                 {{ blog.content }}
+{#                                {% endautoescape %}#}
                             </a>
                         </div>
                         <div class="userbar">

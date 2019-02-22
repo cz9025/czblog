@@ -34,23 +34,30 @@
 
         <div class="form-group">
             <label>文章内容：</label>
-
+{#{% autoescape off %}#}
             <div id="editormd" class="col-md-10 text-left">
 
-                <textarea name="content" id="id_body" placeholder="文章的描述。。。"
+                <textarea name="content" id="editormd" placeholder="文章的描述。。。"
                           style="display:none;">{{ content }}</textarea>
+{#{% endautoescape %}#}
             </div>
-        </div>
 
+        </div>
 
         <script type="text/javascript">
 
             $(function () {
-                var editor = editormd("editormd", {
+                editormd("editormd", {
+                    {#mode:'markdown',#}
                     width: "100%",
                     height: 640,
+                    autoFocus:false,
+                    placeholder:'编写文章内容...',
                     syncScrolling: 'single',
-                    path: "{% static 'editor/lib/' %}"
+                    imageUpload: true,//启用本地图片上传
+                    imageFormats: ["jpg", "jpeg", "gif", "png", "bmp"],
+                    imageUploadURL: "{%  url 'myblog:uploadImg' %}", //文件提交请求路径
+                    path: "{% static 'editor/lib/' %}",
                 });
             });
         </script>

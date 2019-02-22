@@ -6,7 +6,7 @@ from datetime import datetime
 from django.db import models
 
 from django.contrib.auth.models import AbstractUser
-
+from markdown import markdown
 from center.models import UserInfo
 
 # 分类表

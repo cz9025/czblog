@@ -18,9 +18,7 @@
         </div>
         <br>
         <br>
-        <div class="blog">
-            {{ blog.content|safe }}
-        </div>
+        <pre class="blog">{{ blog.content|safe}}</pre>
 
         <span class="">个人分类：<a class="marks" href="{% url 'blog:marks' blog.marks %}">{{ blog.marks }}</a></span>
 

@@ -27,6 +27,9 @@ urlpatterns = [
     # 删除博客
     url(r'^del_blog$', views.del_blog, name='mdel'),
 
+    # markdown上传图片的
+    url(r'^uploadImg/$', views.uploadImg, name='uploadImg'),
+
 
 
 ]
