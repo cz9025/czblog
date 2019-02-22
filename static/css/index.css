@@ -2,17 +2,19 @@ ul {
     list-style: none;
 }
 
-.oneline {
+.online {
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    /*text-overflow: ellipsis;*/
+    /*white-space: nowrap;*/
 }
 
 .summary {
+    display: block;
     color: #8a8a8a;
-    line-height: 24px;
+    line-height: 22px;
     font-size: 14px;
     margin-bottom: 4px;
+    max-height: 42px;
 }
 
 h2 {
@@ -69,8 +71,8 @@ h2 {
     margin-left: 10px;
     margin-right: 10px;
 }
-
-.userbar .fr span, .userbar .fl .marks {
+/*蓝色字体*/
+.userbar .fr span, .userbar .fl .marks, .userbar .fl .name {
     color: #3399ea;
 }
 

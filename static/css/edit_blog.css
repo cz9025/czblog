@@ -16,3 +16,15 @@ input:focus {
 textarea.content{
     height: 300px;
 }
+
+/*添加标签*/
+.admarks{
+    margin-left: 15px;
+}
+
+.newmarks{
+    display: none;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 4px;
+}

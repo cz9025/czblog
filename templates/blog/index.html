@@ -40,13 +40,13 @@
                                 <span></span>
                             {% endif %}
                             <a target="_blank" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
-                        <div class="oneline">
+                        <p class="online">
                             <a href="{% url 'blog:blog_page' blog.id %}" style="font-size: 14px;" class="summary">
 {#                                {% autoescape on %}#}
                                 {{ blog.content }}
 {#                                {% endautoescape %}#}
                             </a>
-                        </div>
+                        </p>
                         <div class="userbar">
                             <div class="fl">
                                 <a class="marks" target="_blank"

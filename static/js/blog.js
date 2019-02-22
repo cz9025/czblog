@@ -13,5 +13,13 @@ $(document).ready(function () {
 
     // 置顶功能  这个要重新做，这里只是调试
     // $(".feedlist_id>li:first>h2").append("<span></span>");
-		
+
+    // {#添加分类#}
+
+
+    $("#admarks").click(function () {
+
+        $(".newmarks").css("display", "inline-block");
+    });
+
 });

@@ -127,7 +127,14 @@ def add_blog(request):
     if request.POST:
         title = request.POST.get('title')
         content = request.POST.get('content')
-        tags = request.POST.get('tags')
+        tags = request.POST.get('tags','0')
+        newmarks=request.POST.get('newmarks',0)
+        if newmarks:
+            # tags=newmarks
+            mark=Blogs.objects.values('marks_id').distinct()
+            print "当前用户所有的标记=>>>>>>",mark
+        else:
+            print "00000=%s=00000"%(newmarks)
 
         # 非空判断title   content
         # if not title:

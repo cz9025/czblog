@@ -23,8 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'cfam^kgsdky$rs$is#s(5zklw1*7%b75#oslzjshlzz2$m@79z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -145,7 +145,7 @@ STATICFILES_DIRS = [
 # MEDIA_ROOT = '/usr/local/src/webroot/media/'
 
 # windows上需关闭
-STATIC_ROOT=os.path.join(BASE_DIR,'static')
+# STATIC_ROOT=os.path.join(BASE_DIR,'static')
 
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'

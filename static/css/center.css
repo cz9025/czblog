@@ -63,13 +63,17 @@ a:hover {
     line-height: 30px;
     float: left;
     margin-right: 15px;
-    background-color: #00B0E7;
+    /*background-color: #00B0E7;*/
     border-radius: 8px;
     text-align: center;
+    border: #CCC solid 1px;
+    padding: 0 3px;
+
 }
 
 .tags li a {
     color: black;
+    font-size: 13px;
 }
 
 /*博客*/
@@ -95,8 +99,8 @@ a:hover {
     /*line-height: 1.5;*/
     margin: 0;
     margin-bottom: 10px;
-    line-height: 21px;
-    max-height: 63px;
+    line-height: 20px;
+    max-height: 58px;
 
     overflow: hidden;
     text-overflow: ellipsis;

@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 # from django.contrib.auth.models import User
 import random
 import string
-
+import os
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
@@ -83,6 +83,9 @@ def usercenter(request, name):
 
             mark[mk.marks_id] = k
             # print "biaoqian=======", mk.marks_id, len(k), mark
+    # 处理图片
+    # result_dir = "%s/article" % (settings.MEDIA_ROOT)
+    # lists = os.listdir(result_dir)
 
     print "<<<<<<<<<<=====usercenter end"
     return render(request, 'center/usercenter.html', locals())
