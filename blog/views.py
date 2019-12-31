@@ -75,7 +75,7 @@ def blog_page(request, blog_id):
     if not request.user.is_authenticated:
         return redirect('/login/')
     # blog=None
-    request.session['login_from'] = request.META.get('HTTP_REFERER', '/blog')
+    request.session['login_from'] = request.META.get('HTTP_REFERER', '/czblog')
     try:
         blog = models.Blogs.objects.get(id=blog_id)
         # 阅读量+1

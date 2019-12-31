@@ -12,7 +12,7 @@ import xadmin
 
 
 class BlogsAdmin(object):
-    list_display = ('id', 'title', 'tops', 'rcount', 'coms', 'like', 'uname', 'marks', 'ctime')
+    list_display = ('id', 'title', 'tops', 'rcount', 'coms', 'like', 'uname', 'marks', 'ctime', 'tops')
     search_fields = ('title',)
     date_hierarchy = 'ctime'
     # ordering = ('ctime',)
@@ -39,7 +39,7 @@ xadmin.site.register(Comments, CommentsAdmin)
 
 
 class LikesAdmin(object):
-    list_display = ('like_user', 'like_title')
+    list_display = ('like_user', 'like_title', 'like_id', 'like_time')
     search_fields = ('like_title',)
 
 
