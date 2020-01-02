@@ -36,7 +36,7 @@
                         {% if blog.tops %}
                             <span></span>
                         {% endif %}
-                        <a target="_blank" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
+                        <a href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
                     <div class="online summary">
                         {{ blog.content }}
                     </div>
@@ -59,7 +59,6 @@
                 </li>
             {% endfor %}
         </ul>
-
 
         {% include "paging.html" %}
     </div>

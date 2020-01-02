@@ -39,17 +39,20 @@
                             {% if blog.tops %}
                                 <span></span>
                             {% endif %}
-                            <a target="_blank" href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
+                            {# target="_blank"#}
+                            <a href="{% url 'blog:blog_page' blog.id %}">{{ blog.title }}</a></h2>
+
                         <p class="online">
                             <a href="{% url 'blog:blog_page' blog.id %}" style="font-size: 14px;" class="summary">
-{#                                {% autoescape on %}#}
+                                {# {% autoescape on %}#}
                                 {{ blog.content }}
-{#                                {% endautoescape %}#}
+                                {# % endautoescape %}#}
                             </a>
                         </p>
+
                         <div class="userbar">
                             <div class="fl">
-                                <a class="marks" target="_blank"
+                                <a class="marks"
                                    href="{% url 'center:usercenter' blog.uname %}">{{ blog.uname }}</a>
                                 <span class="little"></span>
                                 <a class="time">{{ blog.ctime |date:"Y年m月d日  H:i:s" }}</a>

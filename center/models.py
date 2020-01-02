@@ -12,7 +12,7 @@ class UserInfo(AbstractUser):
     birthday = models.CharField(max_length=20, null=True, blank=True, verbose_name='生日', default='2018-01-01')
     gender = models.CharField(max_length=6, choices=(('1', '男'), ('0', '女')), default='0', verbose_name='性别')
     address = models.CharField(max_length=100, null=True, blank=True, default='', verbose_name='地址')
-    mobile = models.CharField(max_length=11, null=True, blank=True, verbose_name='手机号')
+    mobile = models.CharField(max_length=11, null=True, blank=True, default='',verbose_name='手机号')
     head_img = models.ImageField(upload_to='img', verbose_name='头像', null=True, blank=True)
 
     class Meta:

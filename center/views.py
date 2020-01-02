@@ -37,8 +37,7 @@ def usercenter(request, name):
         # 头像
         try:
             head_img = request.FILES['heads']
-
-            print 'user.head_img=>>>>', head_img
+            print u'上传的图片名=>>>>{}'.format(head_img)
             # 上传后的文件名就是自己的用户名
             user.head_img = user.username + '.png'
             # ran_str = ''.join(random.sample(string.ascii_letters + string.digits, 12))
@@ -47,16 +46,12 @@ def usercenter(request, name):
             with open(fname, 'wb') as pic:
                 for c in head_img.chunks():
                     pic.write(c)
-
         except:
             print u'没有上传头像'
 
         user.save()
         # 修改资料后重定向，不然再次刷新会提示重新提交
         return redirect("center:usercenter", user.username)
-
-    # arg_urls = request.path
-    # print "arg_urls=>>>>", arg_urls
 
     # 增加翻页
     # 查询出该用户的博客
@@ -75,12 +70,11 @@ def usercenter(request, name):
     except EmptyPage:
         blogs = paginator.page(paginator.num_pages)  # 如果用户输入的页数不在系统的页码列表中时,显示最后一页的内容
 
-        # 该用户博客标签
+    # 该用户博客标签
     mark = {}
     for mk in blogs:
         if not mark.has_key(mk.marks_id):
             k = Blogs.objects.filter(uname=name, marks=mk.marks_id).count()
-
             mark[mk.marks_id] = k
             # print "biaoqian=======", mk.marks_id, len(k), mark
     # 处理图片
