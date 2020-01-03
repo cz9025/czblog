@@ -46,8 +46,8 @@ ul.newul li img {
 .foucsBox {
     float: left;
     /*margin: 0 auto;*/
-    width: 600px;
-    height: 400px;
+    width: 500px;
+    height: 250px;
     overflow: hidden;
     position: relative;
 }
@@ -59,8 +59,8 @@ ul.newul li img {
 
 .foucsBox ul li a {
     display: inline-block;
-    width: 600px;
-    height: 400px;
+    width: 500px;
+    height: 250px;
     position: relative;
 }
 
@@ -78,7 +78,7 @@ ul.newul li img {
     position: absolute;
     width: 34px;
     height: 56px;
-    top: 183px;
+    top: 98px;
     left: 0;
     z-index: 1;
     background: url(../img/arrLeftFocus.png) no-repeat rgba(0, 0, 0, 0.5);
@@ -89,7 +89,7 @@ ul.newul li img {
     position: absolute;
     width: 34px;
     height: 56px;
-    top: 183px;
+    top: 98px;
     right: 0;
     z-index: 1;
     background: url(../img/arrRigFocus.png) no-repeat rgba(0, 0, 0, 0.5);
@@ -136,7 +136,7 @@ ul.newul li img {
 /*百度新闻的开始*/
 .bdnews, .net, .finance {
     float: left;
-    /*width: 400px;*/
+    width: 400px;
     /*height: 1000px;*/
     /*background-color: gold;*/
     margin-left: 15px;

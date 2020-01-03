@@ -32,27 +32,28 @@ def index(request):
     def hq_banana(res):
         """环球 banana图"""
         pq = res.result()
-        div = pq("#foucsBox ul.imgCon")
+        div = pq("div.focus-box ul")
         li = div.find("li")
         for i in li.items():
             img = i.find("a").eq(0).find("img").attr("src")
-            a = i.find(".imgTitle>a")
+            a = i.find("a").eq(0)
             href = a.attr("href")
-            txt = a.html()
+            txt = i.find("a").eq(0).find("img").attr("alt")
             if img:
                 mydata = {
                     "txt": txt,
                     "href": href,
                     "img": img
                 }
+                # print mydata
                 banana.append(mydata)
 
     def hx_money(res):
         """人民网"""
         pq = res.result()
-        print "pq=>>>>>",pq
+        # print "pq=>>>>>",pq
         hdnews = pq('.headingNews_box .headingNews:first').find(".hdNews")
-        print "hdnews=>>>>",hdnews
+        # print "hdnews=>>>>",hdnews
         for news in hdnews.items():
             a = news.find("strong a")
             if a:

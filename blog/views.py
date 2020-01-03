@@ -41,7 +41,7 @@ def search(request):
     title = request.GET.get('title')
     s = request.build_absolute_uri()
     print "s=>>>>>",s
-    arg_urls = request.path[0:-1] + "?title=" + title
+    arg_urls = request.path + "?title=" + title
     print "arg_urls=>>>>",arg_urls
 
     # 增加翻页

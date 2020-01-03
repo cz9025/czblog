@@ -2,10 +2,8 @@
 from __future__ import unicode_literals
 
 # from django.contrib.auth.models import User
-import random
-import string
-import os
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 # 改版后使用修改过的用户表，如果用自带的，记得注释这里
@@ -89,22 +87,23 @@ def uselogin(request):
     """登录"""
     # if request.method == 'GET':
     # #     记住来源的url,如果没有则设置为首页('/blog')
-    #     request.session['login_from'] = request.META.get('HTTP_REFERER', '/blog')
+    #     request.session['login_from'] = request.META.get('HTTP_REFERER', '/czblog')
     #     print "===进入登录===",request.session['login_from']
     if request.POST:
         username = request.POST.get('username')
         password = request.POST.get('password')
+        print "password=>>>",password
         # 输入正确的账号，返回用户名，否则返回none
         user = authenticate(username=username, password=password)
         # print "laiyuan=>>>>",request.META.get('HTTP_REFERER', '/blog')
         if user:
-            print ("===登录用户名===", user)
+            print (u"===登录用户名===", user)
             login(request, user)
             # 重定向到来源的url
             # return HttpResponseRedirect(request.session['login_from'])
             return redirect('/czblog')
         else:
-            return render(request, 'login.html', {'logs': '账号或密码错误！%s' % user})
+            return render(request, 'login.html', {'logs': '账号或密码错误！'})
 
     return render(request, 'login.html', {'logs': ' '})
 
@@ -146,9 +145,9 @@ def reg(request):
         # if password1 != password2:
         #     return render(request, "blog/register.html", {'logs': '两次密码出入不一致'})
         name = UserInfo.objects.filter(username=username)
-        # 如果用户存在，则name=1,不存在则name=0
+        # 如果用户存在，则提示
         if name:
-            return render(request, "register.html", {'message': '用户已存在%s' % len(name)})
+            return render(request, "register.html", {'message': '用户%s已存在' % username})
         # else:
         # return render(request, "regist.html", {'logs': '用户bu存在%s' % len(name)})
         # 得到用户输入的用户名和密码创建一个新用户

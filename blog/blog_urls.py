@@ -15,7 +15,7 @@ urlpatterns = [
     # 博客页面
     url(r'^(?P<blog_id>\d+)$', views.blog_page, name='blog_page'),
     # 搜索博客(?P<title>.*?)$
-    url(r'^search/', views.search, name='indexsearch'),
+    url(r'^search', views.search, name='indexsearch'),
 
     # 按类别分类显示tags
     url(r'^mark/(?P<tags>.*?)$', views.marks, name='marks'),
